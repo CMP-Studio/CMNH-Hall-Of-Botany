@@ -1,16 +1,16 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux/native';
-import CheckboxList from '../components/checkboxList';
-import * as CheckboxListActions from '../actions/actions';
+import HallOfBotanyView from '../components/hallOfBotanyView';
+import * as HallOfBotanyActions from '../actions/actions';
 
 function mapStateToProps(state) {
   return {
-    rows: state.rows
+    context: state.context
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(CheckboxListActions, dispatch);
+  return bindActionCreators(HallOfBotanyActions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CheckboxList);
+export default connect(mapStateToProps, mapDispatchToProps)(HallOfBotanyView);

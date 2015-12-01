@@ -1,9 +1,9 @@
 
 import { combineReducers } from 'redux';
-import rows from './rows';
+import context from './context';
 
 const rootReducer = combineReducers({
-  rows
+  context
 });
 
 export default rootReducer;
