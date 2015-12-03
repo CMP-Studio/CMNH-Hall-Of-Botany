@@ -2,6 +2,10 @@
 'use strict';
 
 const React = require('react-native');
+const BeaconManager = React.NativeModules.BeaconManager;
+
+const proximityUUID = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D';
+const beaconRegionID = 'Hall Of Botany';
 
 const {
   StyleSheet,
@@ -9,18 +13,49 @@ const {
   View,
   Text,
   PropTypes,
+  NativeAppEventEmitter,
 } = React;
 
 var HallOfBotanyView = React.createClass({
   propTypes: {
-    context: PropTypes.arrayOf(PropTypes.shape({
+    context: PropTypes.shape({
       title: PropTypes.string.isRequired,
       text: PropTypes.string.isRequired,
-    }).isRequired).isRequired,
+      proximity: PropTypes.number.isRequired,
+    }).isRequired,
+    switchContext: PropTypes.func.isRequired,
+  },
+
+  componentDidMount: function() {
+    var { switchContext } = this.props;
+
+    BeaconManager.startTracking(proximityUUID, beaconRegionID);
+
+    NativeAppEventEmitter.addListener("BeaconManagerBeaconPing", ( body ) => {
+      switchContext(body.major + ':' + body.minor, body.proximity);
+    });
+  },
+
+  componentWillUnmount: function() {
+    BeaconManager.stopTracking();
   },
 
   render: function() {
     var { context } = this.props;
+
+    var far = false;
+    var middle = false;
+    var inner = false;
+
+    if (context.proximity >= 1) {
+      far = true;
+      if (context.proximity >= 2) {
+        middle = true;
+        if (context.proximity >= 3) {
+          inner = true;
+        }
+      }
+    }
 
     return (
       <View>
@@ -35,9 +70,9 @@ var HallOfBotanyView = React.createClass({
 
         <View style={styles.container}>
           <View style={styles.circlesContainer}>
-            <View style={true && styles.farCircle}>
-              <View style={true && styles.middleCircle}>
-                <View style={true && styles.closeCircle}>
+            <View style={far && styles.farCircle}>
+              <View style={middle && styles.middleCircle}>
+                <View style={inner && styles.closeCircle}>
                 </View>
               </View>
             </View>
@@ -116,7 +151,7 @@ const styles = StyleSheet.create({
     margin: 37.5,
     borderRadius: 37.5,
     backgroundColor: 'red',
-  }
+  },
 });
 
 module.exports = HallOfBotanyView;
