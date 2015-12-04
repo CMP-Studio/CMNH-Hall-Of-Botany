@@ -101,17 +101,12 @@ var HallOfBotanyView = React.createClass({
     var { context } = this.props;
 
     var far = false;
-    var middle = false;
-    var inner = false;
+    var close = false;
 
-    if (context.proximity >= 1) {
+    if (context.proximity == 1) {
       far = true;
-      if (context.proximity >= 2) {
-        middle = true;
-        if (context.proximity >= 3) {
-          inner = true;
-        }
-      }
+    } else if (context.proximity == 2) {
+      close = true;
     }
 
     return (
@@ -126,10 +121,20 @@ var HallOfBotanyView = React.createClass({
         <View style={styles.separator} />
 
         <View style={styles.container}>
+
           <View style={styles.circlesContainer}>
-            <View style={far && styles.farCircle}>
-              <View style={middle && styles.middleCircle}>
-                <View style={inner && styles.closeCircle}>
+            <View style={styles.roomOutline}>
+              <View style={{height: 100}}>
+                <View style={((context.title == 'Mt. Rainer') && far) && styles.farCircle}>
+                  <View style={((context.title == 'Mt. Rainer') && close) && styles.closeCircle}>
+                  </View>
+                </View>
+              </View>
+
+              <View style={{marginTop: 40}}>
+                <View style={((context.title == 'Pennsylvania Forests') && far) && styles.farCircle}>
+                  <View style={((context.title == 'Pennsylvania Forests') && close) && styles.closeCircle}>
+                  </View>
                 </View>
               </View>
             </View>
@@ -187,27 +192,21 @@ const styles = StyleSheet.create({
     height: 300,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'blue',
+    backgroundColor: 'lightGray',
+  },
+  roomOutline: {
+    width: 200,
+    height: 250,
+    borderWidth: 5,
+    borderColor: 'darkGray'
   },
   farCircle: {
-    height: 225,
-    width: 225,
-    borderRadius: 112.5,
-    backgroundColor: 'yellow',
-  },
-  middleCircle: {
-    height: 150,
-    width: 150,
-    margin: 37.5,
-    borderRadius: 75,
-    backgroundColor: 'orange',
-  },
-  closeCircle: {
-    height: 75,
-    width: 75,
-    margin: 37.5,
-    borderRadius: 37.5,
-    backgroundColor: 'red',
+    height: 100,
+    width: 100,
+    alignSelf: 'center',
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: 'blue',
   },
 });
 
