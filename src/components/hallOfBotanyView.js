@@ -11,9 +11,15 @@ const beaconRegionID = 'Hall Of Botany';
 const Beacons = {
   '41892:30560': {
     title: 'Mt. Rainer', 
-    text: 'Lovley bird noises',
+    text: 'The sound of rushing water',
     audioSrc: 'WaterSoundsLoop.mp3',
     proximity: 0},
+  '54445:31148': {
+    title: 'Pennsylvania Forests', 
+    text: 'Lovley bird noises',
+    audioSrc: 'BirdSoundsLoop.mp3',
+    proximity: 0
+  },
   'None': {
     title: '', 
     text: '',

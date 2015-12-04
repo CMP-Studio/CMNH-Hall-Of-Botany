@@ -15,7 +15,4 @@
 RCT_EXTERN_METHOD(startTracking:(NSString *)uuidString identifier:(NSString *)identifier)
 RCT_EXTERN_METHOD(stopTracking)
 
-RCT_EXTERN_METHOD((NSString *) getProximityUUID)
-RCT_EXTERN_METHOD((NSString *) getBeaconRegionID)
-
 @end

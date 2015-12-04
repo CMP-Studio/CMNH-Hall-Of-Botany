@@ -15,8 +15,6 @@ class BeaconManager: NSObject, ESTBeaconManagerDelegate {
   var bridge: RCTBridge!
   let eventName = "BeaconManagerBeaconPing"
   
-  var uuid = String()
-  var beaconRegionID = String()
   let beaconManager = ESTBeaconManager()
   var beaconRegion = CLBeaconRegion()
   
@@ -27,26 +25,13 @@ class BeaconManager: NSObject, ESTBeaconManagerDelegate {
     beaconManager.requestAlwaysAuthorization()
   }
   
-  @objc func startTracking(uuid: String, identifier: String) -> Bool {
-    self.uuid = uuid
-    
-    if let nsuuid = NSUUID(UUIDString: self.uuid) {
-      beaconRegionID = identifier
-      beaconRegion = CLBeaconRegion(proximityUUID: nsuuid, identifier: beaconRegionID)
+  @objc func startTracking(uuid: String, identifier: String) {
+    if let nsuuid = NSUUID(UUIDString: uuid) {
+      beaconRegion = CLBeaconRegion(proximityUUID: nsuuid, identifier: identifier)
       beaconManager.startRangingBeaconsInRegion(beaconRegion)
-      return true
+    } else {
+      print("Error - BeaconManager - uuidString is incorrect")
     }
-    
-    print("Error - BeaconManager - uuidString is incorrect")
-    return false
-  }
-  
-  @objc func getProximityUUID() -> String {
-    return uuid
-  }
-  
-  @objc func getBeaconRegionID() -> String {
-    return beaconRegionID
   }
   
   @objc func stopTracking() {
@@ -54,28 +39,25 @@ class BeaconManager: NSObject, ESTBeaconManagerDelegate {
   }
   
   func beaconManager(manager: AnyObject, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
-    
     var eventBody = ["major" : "", "minor" : "", "proximity" : ""]
     
     if let nearestBeacon = beacons.first {
-      if nearestBeacon.major == 41892 && nearestBeacon.minor == 30560 {
-        var string = ""
-        
-        switch nearestBeacon.proximity {
-        case CLProximity.Unknown :
-          string = "UNKNOWN"
-        case CLProximity.Immediate :
-          string = "IMMEDIATE"
-        case CLProximity.Near :
-          string = "NEAR"
-        case CLProximity.Far :
-          string = "FAR"
-        }
-        
-        eventBody = ["major" : String(nearestBeacon.major),
-                     "minor" : String(nearestBeacon.minor),
-                     "proximity" : string]
+      var string = ""
+      
+      switch nearestBeacon.proximity {
+      case CLProximity.Unknown :
+        string = "UNKNOWN"
+      case CLProximity.Immediate :
+        string = "IMMEDIATE"
+      case CLProximity.Near :
+        string = "NEAR"
+      case CLProximity.Far :
+        string = "FAR"
       }
+      
+      eventBody = ["major" : String(nearestBeacon.major),
+                   "minor" : String(nearestBeacon.minor),
+                   "proximity" : string]
     }
     
     bridge.eventDispatcher.sendAppEventWithName(eventName, body: eventBody)

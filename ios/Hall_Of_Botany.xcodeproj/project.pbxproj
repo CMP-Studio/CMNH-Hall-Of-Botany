@@ -25,6 +25,7 @@
 		3236089E1C0F2D100084B161 /* BeaconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3236089D1C0F2D100084B161 /* BeaconManager.swift */; };
 		323608AA1C0F2F7F0084B161 /* BeaconManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 323608A91C0F2F7F0084B161 /* BeaconManagerBridge.m */; };
 		32846A031C11E5C300AB0A05 /* SwiftyTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32846A021C11E5C300AB0A05 /* SwiftyTimer.swift */; };
+		32C782A41C12111300BEAF3A /* BirdSoundsLoop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 32C782A31C12111300BEAF3A /* BirdSoundsLoop.mp3 */; };
 		32D4FE991C109B73001A9CCB /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D4FE981C109B73001A9CCB /* AudioManager.swift */; };
 		32D4FE9B1C109D30001A9CCB /* AudioManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D4FE9A1C109D30001A9CCB /* AudioManagerBridge.m */; };
 		32D4FE9E1C109D83001A9CCB /* WaterSoundsLoop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 32D4FE9D1C109D83001A9CCB /* WaterSoundsLoop.mp3 */; };
@@ -137,6 +138,7 @@
 		3236089D1C0F2D100084B161 /* BeaconManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconManager.swift; sourceTree = "<group>"; };
 		323608A91C0F2F7F0084B161 /* BeaconManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconManagerBridge.m; sourceTree = "<group>"; };
 		32846A021C11E5C300AB0A05 /* SwiftyTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyTimer.swift; sourceTree = "<group>"; };
+		32C782A31C12111300BEAF3A /* BirdSoundsLoop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BirdSoundsLoop.mp3; sourceTree = "<group>"; };
 		32D4FE981C109B73001A9CCB /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		32D4FE9A1C109D30001A9CCB /* AudioManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioManagerBridge.m; sourceTree = "<group>"; };
 		32D4FE9D1C109D83001A9CCB /* WaterSoundsLoop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = WaterSoundsLoop.mp3; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				3236089C1C0F2D0F0084B161 /* Hall_Of_Botany-Bridging-Header.h */,
 				32846A021C11E5C300AB0A05 /* SwiftyTimer.swift */,
 				32D4FE9D1C109D83001A9CCB /* WaterSoundsLoop.mp3 */,
+				32C782A31C12111300BEAF3A /* BirdSoundsLoop.mp3 */,
 				32D4FE9C1C109D4B001A9CCB /* AudioManager */,
 				32D4FE8D1C109B59001A9CCB /* BeaconManager */,
 			);
@@ -561,6 +564,7 @@
 				32D4FE9E1C109D83001A9CCB /* WaterSoundsLoop.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				32C782A41C12111300BEAF3A /* BirdSoundsLoop.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

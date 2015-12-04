@@ -17,7 +17,7 @@ class AudioManager: NSObject {
   var volumeAlterationsPerSecond = 30.0
   
   var audioSrc = ""
-  var player = AVAudioPlayer()
+  var player:AVAudioPlayer?
   var timer:NSTimer?
   var finished = true
 
@@ -39,17 +39,17 @@ class AudioManager: NSObject {
       
       player = try AVAudioPlayer(contentsOfURL: soundURL)
       self.audioSrc = audio
-      player.numberOfLoops = -1
-      player.play()
-      player.volume = 0.0
+      player!.numberOfLoops = -1
+      player!.play()
+      player!.volume = 0.0
     } catch let error as NSError {
       print("Error - AudioManager - \(error.domain)")
     }
   }
   
   @objc func adjustVolume(volume: Double) {
-    if audioSrc != "" {
-      if finished && (volume != Double(player.volume)) {
+    if let _player = player {
+      if finished && (volume != Double(_player.volume)) {
         finished = false
         fadetoVolume(volume) {
           self.finished = true
@@ -59,8 +59,8 @@ class AudioManager: NSObject {
   }
   
   @objc func stopAudio() {
-    if audioSrc != "" {
-      player.stop()
+    if let _player = player {
+      _player.stop()
       audioSrc = ""
     }
   }
@@ -72,7 +72,7 @@ class AudioManager: NSObject {
       
       var currentStep = 0.0;
       let totalSteps = duration * volumeAlterationsPerSecond
-      let fromVolume = Double(player.volume)
+      let fromVolume = Double(player!.volume)
       
       // React Native Modules do not run on the main thread
       // and NSTimer needs to be ran on the main thread to work.
@@ -81,7 +81,7 @@ class AudioManager: NSObject {
           var volumeMultiplier, newVolume, progress: Double
           
           if currentStep > totalSteps {
-            self.player.volume = Float(toVolume)
+            self.player!.volume = Float(toVolume)
             self.timer!.invalidate()
             self.timer = nil
             onFinished?()
@@ -98,7 +98,7 @@ class AudioManager: NSObject {
             newVolume = toVolume - (toVolume - fromVolume) * volumeMultiplier
           }
           
-          self.player.volume = Float(newVolume)
+          self.player!.volume = Float(newVolume)
           
           currentStep += 1
       }
