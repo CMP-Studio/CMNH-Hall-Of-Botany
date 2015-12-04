@@ -3,9 +3,30 @@
 
 const React = require('react-native');
 const BeaconManager = React.NativeModules.BeaconManager;
+const AudioManager = React.NativeModules.AudioManager;
 
 const proximityUUID = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D';
 const beaconRegionID = 'Hall Of Botany';
+
+const Beacons = {
+  '41892:30560': {
+    title: 'Mt. Rainer', 
+    text: 'Lovley bird noises',
+    audioSrc: 'WaterSoundsLoop.mp3',
+    proximity: 0},
+  'None': {
+    title: '', 
+    text: '',
+    audioSrc: '',
+    proximity: 0},
+};
+
+const PROXIMITIES = {
+  IMMEDIATE: 'IMMEDIATE',
+  NEAR: 'NEAR',
+  FAR: 'FAR',
+  UNKNOWN: 'UNKNOWN',
+};
 
 const {
   StyleSheet,
@@ -27,17 +48,49 @@ var HallOfBotanyView = React.createClass({
   },
 
   componentDidMount: function() {
-    var { switchContext } = this.props;
+    var { switchAudio, switchContext, context } = this.props;
 
     BeaconManager.startTracking(proximityUUID, beaconRegionID);
 
     NativeAppEventEmitter.addListener("BeaconManagerBeaconPing", ( body ) => {
-      switchContext(body.major + ':' + body.minor, body.proximity);
+      let detectedBeacon;
+      let proximity = 0;
+      const beaconID = body.major + ':' + body.minor;
+
+      switch (body.proximity) {
+        case PROXIMITIES.IMMEDIATE:
+          proximity = 3;
+          break;
+        case PROXIMITIES.NEAR:
+          proximity = 2;
+          break;
+        case PROXIMITIES.FAR:
+          proximity = 1;
+          break;
+        case PROXIMITIES.UNKNOWN:
+          // Keep old proximity
+          proximity = context.proximity;
+          break;
+        default:
+          proximity = 0;
+      }
+
+      if (Beacons[beaconID] !== undefined) {
+        detectedBeacon = Beacons[beaconID];
+      } else {
+        detectedBeacon = Beacons.None;
+      }
+
+      switchAudio(detectedBeacon.audioSrc, 'play', proximity * 0.25);
+      switchContext(detectedBeacon, proximity);
     });
   },
 
   componentWillUnmount: function() {
+    var { switchAudio } = this.props;
+
     BeaconManager.stopTracking();
+    switchAudio('', 'stop', 0.0);
   },
 
   render: function() {

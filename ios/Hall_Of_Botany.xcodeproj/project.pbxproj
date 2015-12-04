@@ -24,6 +24,11 @@
 		323364A41C0F73D600A8109C /* EstimoteSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323364A31C0F73D600A8109C /* EstimoteSDK.framework */; };
 		3236089E1C0F2D100084B161 /* BeaconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3236089D1C0F2D100084B161 /* BeaconManager.swift */; };
 		323608AA1C0F2F7F0084B161 /* BeaconManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 323608A91C0F2F7F0084B161 /* BeaconManagerBridge.m */; };
+		32846A031C11E5C300AB0A05 /* SwiftyTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32846A021C11E5C300AB0A05 /* SwiftyTimer.swift */; };
+		32D4FE991C109B73001A9CCB /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D4FE981C109B73001A9CCB /* AudioManager.swift */; };
+		32D4FE9B1C109D30001A9CCB /* AudioManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D4FE9A1C109D30001A9CCB /* AudioManagerBridge.m */; };
+		32D4FE9E1C109D83001A9CCB /* WaterSoundsLoop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 32D4FE9D1C109D83001A9CCB /* WaterSoundsLoop.mp3 */; };
+		32D4FEA01C109DF8001A9CCB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32D4FE9F1C109DF8001A9CCB /* AVFoundation.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -131,6 +136,11 @@
 		3236089C1C0F2D0F0084B161 /* Hall_Of_Botany-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hall_Of_Botany-Bridging-Header.h"; sourceTree = "<group>"; };
 		3236089D1C0F2D100084B161 /* BeaconManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconManager.swift; sourceTree = "<group>"; };
 		323608A91C0F2F7F0084B161 /* BeaconManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconManagerBridge.m; sourceTree = "<group>"; };
+		32846A021C11E5C300AB0A05 /* SwiftyTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyTimer.swift; sourceTree = "<group>"; };
+		32D4FE981C109B73001A9CCB /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		32D4FE9A1C109D30001A9CCB /* AudioManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioManagerBridge.m; sourceTree = "<group>"; };
+		32D4FE9D1C109D83001A9CCB /* WaterSoundsLoop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = WaterSoundsLoop.mp3; sourceTree = "<group>"; };
+		32D4FE9F1C109DF8001A9CCB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,6 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32D4FEA01C109DF8001A9CCB /* AVFoundation.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -248,8 +259,10 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				3236089C1C0F2D0F0084B161 /* Hall_Of_Botany-Bridging-Header.h */,
-				3236089D1C0F2D100084B161 /* BeaconManager.swift */,
-				323608A91C0F2F7F0084B161 /* BeaconManagerBridge.m */,
+				32846A021C11E5C300AB0A05 /* SwiftyTimer.swift */,
+				32D4FE9D1C109D83001A9CCB /* WaterSoundsLoop.mp3 */,
+				32D4FE9C1C109D4B001A9CCB /* AudioManager */,
+				32D4FE8D1C109B59001A9CCB /* BeaconManager */,
 			);
 			name = Hall_Of_Botany;
 			sourceTree = "<group>";
@@ -260,6 +273,24 @@
 				146834041AC3E56700842450 /* libReact.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		32D4FE8D1C109B59001A9CCB /* BeaconManager */ = {
+			isa = PBXGroup;
+			children = (
+				3236089D1C0F2D100084B161 /* BeaconManager.swift */,
+				323608A91C0F2F7F0084B161 /* BeaconManagerBridge.m */,
+			);
+			name = BeaconManager;
+			sourceTree = "<group>";
+		};
+		32D4FE9C1C109D4B001A9CCB /* AudioManager */ = {
+			isa = PBXGroup;
+			children = (
+				32D4FE981C109B73001A9CCB /* AudioManager.swift */,
+				32D4FE9A1C109D30001A9CCB /* AudioManagerBridge.m */,
+			);
+			name = AudioManager;
 			sourceTree = "<group>";
 		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
@@ -320,6 +351,7 @@
 		847A1B538CCA1CC966264E75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				32D4FE9F1C109DF8001A9CCB /* AVFoundation.framework */,
 				323364A31C0F73D600A8109C /* EstimoteSDK.framework */,
 			);
 			name = Frameworks;
@@ -526,6 +558,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32D4FE9E1C109D83001A9CCB /* WaterSoundsLoop.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
@@ -566,6 +599,9 @@
 				323608AA1C0F2F7F0084B161 /* BeaconManagerBridge.m in Sources */,
 				3236089E1C0F2D100084B161 /* BeaconManager.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				32846A031C11E5C300AB0A05 /* SwiftyTimer.swift in Sources */,
+				32D4FE9B1C109D30001A9CCB /* AudioManagerBridge.m in Sources */,
+				32D4FE991C109B73001A9CCB /* AudioManager.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -49,7 +49,7 @@ class BeaconManager: NSObject, ESTBeaconManagerDelegate {
     return beaconRegionID
   }
   
-  @objc func stopTracking() -> Void {
+  @objc func stopTracking() {
     beaconManager.stopRangingBeaconsInRegion(self.beaconRegion)
   }
   
@@ -82,7 +82,7 @@ class BeaconManager: NSObject, ESTBeaconManagerDelegate {
   }
   
   func beaconManager(manager: AnyObject, rangingBeaconsDidFailForRegion region: CLBeaconRegion?, withError error: NSError) {
-    print("Error - BeaconManager - \(error)")
+    print("Error - BeaconManager - \(error.domain)")
   }
   
 }
