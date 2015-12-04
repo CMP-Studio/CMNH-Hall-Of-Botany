@@ -65,8 +65,6 @@ var HallOfBotanyView = React.createClass({
 
       switch (body.proximity) {
         case PROXIMITIES.IMMEDIATE:
-          proximity = 3;
-          break;
         case PROXIMITIES.NEAR:
           proximity = 2;
           break;
@@ -87,7 +85,7 @@ var HallOfBotanyView = React.createClass({
         detectedBeacon = Beacons.None;
       }
 
-      switchAudio(detectedBeacon.audioSrc, 'play', proximity * 0.25);
+      switchAudio(detectedBeacon.audioSrc, 'play', proximity * 0.5);
       switchContext(detectedBeacon, proximity);
     });
   },
