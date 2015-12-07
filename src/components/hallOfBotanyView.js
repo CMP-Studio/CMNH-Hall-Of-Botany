@@ -37,6 +37,7 @@ const PROXIMITIES = {
 const {
   StyleSheet,
   ListView,
+  Image,
   View,
   Text,
   PropTypes,
@@ -100,6 +101,7 @@ var HallOfBotanyView = React.createClass({
   render: function() {
     var { context } = this.props;
 
+    var mtRainerIcon, PennForestsIcon;
     var far = false;
     var close = false;
 
@@ -107,6 +109,31 @@ var HallOfBotanyView = React.createClass({
       far = true;
     } else if (context.proximity == 2) {
       close = true;
+    }
+
+    // TODO: Clean this up...
+    if (context.title == 'Mt. Rainer') {
+      mtRainerIcon = require('../img/Active.png')
+
+      if (far) {
+        mtRainerIcon = require('../img/Far.png')
+      } else if (close) {
+        mtRainerIcon = require('../img/Close.png')
+      }
+    } else {
+      mtRainerIcon = require('../img/Detected.png')
+    }
+
+    if (context.title == 'Pennsylvania Forests') {
+      PennForestsIcon = require('../img/Active.png')
+
+      if (far) {
+        PennForestsIcon = require('../img/Far.png')
+      } else if (close) {
+        PennForestsIcon = require('../img/Close.png')
+      }
+    } else {
+      PennForestsIcon = require('../img/Detected.png')
     }
 
     return (
@@ -125,17 +152,11 @@ var HallOfBotanyView = React.createClass({
           <View style={styles.circlesContainer}>
             <View style={styles.roomOutline}>
               <View style={{height: 100}}>
-                <View style={((context.title == 'Mt. Rainer') && far) && styles.farCircle}>
-                  <View style={((context.title == 'Mt. Rainer') && close) && styles.closeCircle}>
-                  </View>
-                </View>
+                <Image style={{alignSelf: 'center'}} source={mtRainerIcon} />
               </View>
 
-              <View style={{marginTop: 40}}>
-                <View style={((context.title == 'Pennsylvania Forests') && far) && styles.farCircle}>
-                  <View style={((context.title == 'Pennsylvania Forests') && close) && styles.closeCircle}>
-                  </View>
-                </View>
+              <View style={{marginTop: 40, height: 100}}>
+                <Image style={{alignSelf: 'center'}} source={PennForestsIcon} />
               </View>
             </View>
           </View>
@@ -199,14 +220,6 @@ const styles = StyleSheet.create({
     height: 250,
     borderWidth: 5,
     borderColor: 'darkGray'
-  },
-  farCircle: {
-    height: 100,
-    width: 100,
-    alignSelf: 'center',
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: 'blue',
   },
 });
 
