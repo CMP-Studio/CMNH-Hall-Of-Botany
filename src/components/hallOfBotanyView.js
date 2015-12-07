@@ -55,7 +55,7 @@ var HallOfBotanyView = React.createClass({
   },
 
   componentDidMount: function() {
-    var { switchAudio, switchContext, context } = this.props;
+    var { switchAudio, switchContext, addBeaconHistory, context } = this.props;
 
     BeaconManager.startTracking(proximityUUID, beaconRegionID);
 
@@ -87,6 +87,7 @@ var HallOfBotanyView = React.createClass({
       }
 
       switchAudio(detectedBeacon.audioSrc, 'play', proximity * 0.5);
+      addBeaconHistory(detectedBeacon.title);
       switchContext(detectedBeacon, proximity);
     });
   },
@@ -99,7 +100,7 @@ var HallOfBotanyView = React.createClass({
   },
 
   render: function() {
-    var { context } = this.props;
+    var { context, beaconHistory } = this.props;
 
     var mtRainerIcon, PennForestsIcon;
     var far = false;
@@ -121,7 +122,11 @@ var HallOfBotanyView = React.createClass({
         mtRainerIcon = require('../img/Close.png')
       }
     } else {
-      mtRainerIcon = require('../img/Detected.png')
+      if (beaconHistory.indexOf('Mt. Rainer') > -1) {
+        mtRainerIcon = require('../img/Visited.png')
+      } else {
+        mtRainerIcon = require('../img/Detected.png')
+      }
     }
 
     if (context.title == 'Pennsylvania Forests') {
@@ -133,7 +138,11 @@ var HallOfBotanyView = React.createClass({
         PennForestsIcon = require('../img/Close.png')
       }
     } else {
-      PennForestsIcon = require('../img/Detected.png')
+      if (beaconHistory.indexOf('Pennsylvania Forests') > -1) {
+        PennForestsIcon = require('../img/Visited.png')
+      } else {
+        PennForestsIcon = require('../img/Detected.png')
+      }
     }
 
     return (

@@ -27,7 +27,7 @@ export default function audio(state = initalState, action) {
         audioSrc: action.audioSrc,
         state: action.state,
         volume: action.volume
-      }
+      };
 
       return Object.assign({}, state, newState);
 

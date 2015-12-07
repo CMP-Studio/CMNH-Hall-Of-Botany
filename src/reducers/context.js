@@ -11,7 +11,11 @@ const initalState = {
 export default function context(state = initalState, action) {
   switch (action.type) {
     case SWITCH_CONTEXT:
-      return Object.assign({}, state, action.beaconInfo, {'proximity' : action.proximity});
+      return Object.assign({}, 
+          state, 
+          action.beaconInfo, 
+          {'proximity' : action.proximity}
+        );
 
     default:
       return state;
