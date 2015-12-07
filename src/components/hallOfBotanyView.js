@@ -113,24 +113,30 @@ var HallOfBotanyView = React.createClass({
     }
 
     // TODO: Should an already discovered state exist?
-    mtRainerIcon = require('../img/Active.png')
+    mtRainerIcon = require('../img/Active.png');
 
     if (context.title == 'Mt. Rainer') {
       if (far) {
-        mtRainerIcon = require('../img/Far.png')
+        mtRainerIcon = require('../img/Far.png');
       } else if (close) {
-        mtRainerIcon = require('../img/Close.png')
+        mtRainerIcon = require('../img/Close.png');
       }
+
+    } else if (beaconHistory.indexOf('Mt. Rainer') > -1) {
+      mtRainerIcon = require('../img/Visited.png');
     }
 
-    PennForestsIcon = require('../img/Active.png')
+    PennForestsIcon = require('../img/Active.png');
 
     if (context.title == 'Pennsylvania Forests') {
       if (far) {
-        PennForestsIcon = require('../img/Far.png')
+        PennForestsIcon = require('../img/Far.png');
       } else if (close) {
-        PennForestsIcon = require('../img/Close.png')
+        PennForestsIcon = require('../img/Close.png');
       }
+
+    } else if (beaconHistory.indexOf('Pennsylvania Forests') > -1) {
+      PennForestsIcon = require('../img/Visited.png');
     }
 
     return (
