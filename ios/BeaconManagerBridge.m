@@ -12,7 +12,9 @@
 
 @interface RCT_EXTERN_MODULE(BeaconManager, NSObject)
 
-RCT_EXTERN_METHOD(startTracking:(NSString *)uuidString identifier:(NSString *)identifier)
+RCT_EXTERN_METHOD(startTracking:(NSString *)uuidString
+                    identifier:(NSString *)identifier
+                    notificationText:(NSString *)text)
 RCT_EXTERN_METHOD(stopTracking)
 
 @end

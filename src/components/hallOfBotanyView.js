@@ -61,7 +61,8 @@ class HallOfBotanyView extends React.Component {
   componentDidMount() {
     const { switchAudio, switchContext, addBeaconHistory, context } = this.props;
 
-    BeaconManager.startTracking(proximityUUID, beaconRegionID);
+    const notificationText = "Do you hear that? Something is playing faintly in the background, you should open the Hall Of Botany app and hear it yourself."
+    BeaconManager.startTracking(proximityUUID, beaconRegionID, notificationText);
 
     NativeAppEventEmitter.addListener("BeaconManagerBeaconPing", ( body ) => {
       let detectedBeacon;

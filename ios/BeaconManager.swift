@@ -18,6 +18,8 @@ class BeaconManager: NSObject, ESTBeaconManagerDelegate {
   let beaconManager = ESTBeaconManager()
   var beaconRegion = CLBeaconRegion()
   
+  var notificationText = String()
+  
   override init() {
     super.init()
     
@@ -25,10 +27,17 @@ class BeaconManager: NSObject, ESTBeaconManagerDelegate {
     beaconManager.requestAlwaysAuthorization()
   }
   
-  @objc func startTracking(uuid: String, identifier: String) {
+  @objc func startTracking(uuid: String, identifier: String, notificationText: String) {
     if let nsuuid = NSUUID(UUIDString: uuid) {
       beaconRegion = CLBeaconRegion(proximityUUID: nsuuid, identifier: identifier)
+      
+      //Ranging Beacons
       beaconManager.startRangingBeaconsInRegion(beaconRegion)
+      
+      //Monitoring Regions
+      self.notificationText = notificationText
+      beaconManager.startMonitoringForRegion(beaconRegion)
+      UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert, categories: nil))
     } else {
       print("Error - BeaconManager - uuidString is incorrect")
     }
@@ -65,6 +74,13 @@ class BeaconManager: NSObject, ESTBeaconManagerDelegate {
   
   func beaconManager(manager: AnyObject, rangingBeaconsDidFailForRegion region: CLBeaconRegion?, withError error: NSError) {
     print("Error - BeaconManager - \(error.domain)")
+  }
+  
+  func beaconManager(manager: AnyObject, didEnterRegion region: CLBeaconRegion) {
+    let notification = UILocalNotification()
+    
+    notification.alertBody = notificationText
+    UIApplication.sharedApplication().presentLocalNotificationNow(notification)
   }
   
 }
