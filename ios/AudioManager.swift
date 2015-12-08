@@ -76,6 +76,8 @@ class AudioManager: NSObject {
       
       // React Native Modules do not run on the main thread
       // and NSTimer needs to be ran on the main thread to work.
+      
+      // TODO: Move off of main thread in order to prevent UI Lock up
       dispatch_async(dispatch_get_main_queue()) {
         self.timer = NSTimer.every(1 / self.volumeAlterationsPerSecond) {
           var volumeMultiplier, newVolume, progress: Double

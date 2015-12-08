@@ -3,7 +3,6 @@
 
 const React = require('react-native');
 const BeaconManager = React.NativeModules.BeaconManager;
-const AudioManager = React.NativeModules.AudioManager;
 
 const proximityUUID = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D';
 const beaconRegionID = 'Hall Of Botany';
@@ -44,18 +43,23 @@ const {
   NativeAppEventEmitter,
 } = React;
 
-var HallOfBotanyView = React.createClass({
-  propTypes: {
-    context: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      proximity: PropTypes.number.isRequired,
-    }).isRequired,
-    switchContext: PropTypes.func.isRequired,
-  },
+class HallOfBotanyView extends React.Component {
+  static get propTypes() {
+    return {
+      context: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired,
+        audioSrc: PropTypes.string.isRequired,
+        proximity: PropTypes.number.isRequired,
+      }).isRequired,
+      switchAudio: PropTypes.func.isRequired,
+      switchContext: PropTypes.func.isRequired,
+      addBeaconHistory: PropTypes.func.isRequired,
+    };
+  }
 
-  componentDidMount: function() {
-    var { switchAudio, switchContext, addBeaconHistory, context } = this.props;
+  componentDidMount() {
+    const { switchAudio, switchContext, addBeaconHistory, context } = this.props;
 
     BeaconManager.startTracking(proximityUUID, beaconRegionID);
 
@@ -90,16 +94,16 @@ var HallOfBotanyView = React.createClass({
       addBeaconHistory(detectedBeacon.title);
       switchContext(detectedBeacon, proximity);
     });
-  },
+  }
 
-  componentWillUnmount: function() {
-    var { switchAudio } = this.props;
+  componentWillUnmount() {
+    const { switchAudio } = this.props;
 
     BeaconManager.stopTracking();
     switchAudio('', 'stop', 0.0);
-  },
+  }
 
-  render: function() {
+  render() {
     var { context, beaconHistory } = this.props;
 
     var mtRainerIcon, PennForestsIcon;
@@ -179,8 +183,8 @@ var HallOfBotanyView = React.createClass({
 
       </View>
     );
-  },
-});
+  }
+};
 
 const styles = StyleSheet.create({
   header: {
