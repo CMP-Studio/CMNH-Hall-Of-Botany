@@ -65,7 +65,7 @@ class HallOfBotanyView extends React.Component {
 
     NativeAppEventEmitter.addListener("BeaconManagerBeaconPing", ( body ) => {
       let detectedBeacon;
-      let proximity = 0;
+      let proximity = 1;
       const beaconID = body.major + ':' + body.minor;
 
       switch (body.proximity) {
@@ -81,7 +81,7 @@ class HallOfBotanyView extends React.Component {
           proximity = context.proximity;
           break;
         default:
-          proximity = 0;
+          proximity = 1;
       }
 
       if (Beacons[beaconID] !== undefined) {
@@ -105,40 +105,19 @@ class HallOfBotanyView extends React.Component {
   render() {
     var { context } = this.props;
 
-    var mtRainerIcon, PennForestsIcon;
-    var far = false;
-    var close = false;
+    var activeImage;
+    var title = context.title;
 
-    if (context.proximity == 1) {
-      far = true;
-    } else if (context.proximity == 2) {
-      close = true;
-    }
-
-    // TODO: Should an already discovered state exist?
-    mtRainerIcon = require('../img/Active.png');
-
-    if (context.title == 'Mt. Rainer') {
-      if (far) {
-        mtRainerIcon = require('../img/Far.png');
-      } else if (close) {
-        mtRainerIcon = require('../img/Close.png');
-      }
-
-    }
-
-    PennForestsIcon = require('../img/Active.png');
-
-    if (context.title == 'Pennsylvania Forests') {
-      if (far) {
-        PennForestsIcon = require('../img/Far.png');
-      } else if (close) {
-        PennForestsIcon = require('../img/Close.png');
-      }
+    if (title === 'Mt. Rainer') {
+      activeImage = require('../img/MtRainer.jpg');
+    } else if (title === 'Pennsylvania Forests') {
+      activeImage = require('../img/PennForrests.jpg');
+    } else {
+      title = "Please walk around to \nexperience this exhibit";
     }
 
     return (
-      <View>
+      <View style={{backgroundColor: 'lightGray'}}>
 
         <View style={styles.header}>
           <Text style={styles.headerTitle}>
@@ -149,30 +128,22 @@ class HallOfBotanyView extends React.Component {
         <View style={styles.separator} />
 
         <View style={styles.container}>
+          <Image style={{height: 250, resizeMode: 'contain', opacity: (0.5 * context.proximity)}} source={activeImage} />
+        </View>
 
-          <View style={styles.circlesContainer}>
-            <View style={styles.roomOutline}>
-              <View style={{height: 100}}>
-                <Image style={{alignSelf: 'center'}} source={mtRainerIcon} />
-              </View>
-
-              <View style={{marginTop: 40, height: 100}}>
-                <Image style={{alignSelf: 'center'}} source={PennForestsIcon} />
-              </View>
-            </View>
-          </View>
-
-          </View>
-            <Text style={styles.title}>
-              {context.title}
-            </Text>
+        <View style={styles.container, {height: 253}}>
           <View>
-
+            <Text style={styles.title}>
+              {title}
+            </Text>
           </View>
+
+          <View style={{flex: 2}}>
             <Text style={styles.text}>
               {context.text}
             </Text>
-          <View>
+          </View>
+
         </View>
 
       </View>
@@ -188,7 +159,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   container: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -208,19 +178,6 @@ const styles = StyleSheet.create({
   headerTitle: {
     paddingTop: 10,
     fontSize: 20,
-  },
-  circlesContainer: {
-    flex: 1,
-    height: 300,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'lightGray',
-  },
-  roomOutline: {
-    width: 200,
-    height: 250,
-    borderWidth: 5,
-    borderColor: 'darkGray'
   },
 });
 

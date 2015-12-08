@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
                BuildableName = "Hall_Of_Botany.app"
-               BlueprintName = "Hall_Of_Botany"
-               ReferencedContainer = "container:Hall_Of_Botany.xcodeproj">
+               BlueprintName = "Hall Of Botany"
+               ReferencedContainer = "container:Hall Of Botany.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "Hall_Of_BotanyTests.xctest"
-               BlueprintName = "Hall_Of_BotanyTests"
-               ReferencedContainer = "container:Hall_Of_Botany.xcodeproj">
+               BuildableName = "Hall Of Botany.xctest"
+               BlueprintName = "Hall Of BotanyTests"
+               ReferencedContainer = "container:Hall Of Botany.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "Hall_Of_BotanyTests.xctest"
-               BlueprintName = "Hall_Of_BotanyTests"
-               ReferencedContainer = "container:Hall_Of_Botany.xcodeproj">
+               BuildableName = "Hall Of Botany.xctest"
+               BlueprintName = "Hall Of BotanyTests"
+               ReferencedContainer = "container:Hall Of Botany.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -58,8 +58,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "Hall_Of_Botany.app"
-            BlueprintName = "Hall_Of_Botany"
-            ReferencedContainer = "container:Hall_Of_Botany.xcodeproj">
+            BlueprintName = "Hall Of Botany"
+            ReferencedContainer = "container:Hall Of Botany.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -81,8 +81,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "Hall_Of_Botany.app"
-            BlueprintName = "Hall_Of_Botany"
-            ReferencedContainer = "container:Hall_Of_Botany.xcodeproj">
+            BlueprintName = "Hall Of Botany"
+            ReferencedContainer = "container:Hall Of Botany.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -100,8 +100,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "Hall_Of_Botany.app"
-            BlueprintName = "Hall_Of_Botany"
-            ReferencedContainer = "container:Hall_Of_Botany.xcodeproj">
+            BlueprintName = "Hall Of Botany"
+            ReferencedContainer = "container:Hall Of Botany.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
