@@ -54,12 +54,11 @@ class HallOfBotanyView extends React.Component {
       }).isRequired,
       switchAudio: PropTypes.func.isRequired,
       switchContext: PropTypes.func.isRequired,
-      addBeaconHistory: PropTypes.func.isRequired,
     };
   }
 
   componentDidMount() {
-    const { switchAudio, switchContext, addBeaconHistory, context } = this.props;
+    const { switchAudio, switchContext, context } = this.props;
 
     const notificationText = "Do you hear that? Something is playing faintly in the background, you should open the Hall Of Botany app and hear it yourself."
     BeaconManager.startTracking(proximityUUID, beaconRegionID, notificationText);
@@ -92,7 +91,6 @@ class HallOfBotanyView extends React.Component {
       }
 
       switchAudio(detectedBeacon.audioSrc, 'play', proximity * 0.5);
-      addBeaconHistory(detectedBeacon.title);
       switchContext(detectedBeacon, proximity);
     });
   }
@@ -105,7 +103,7 @@ class HallOfBotanyView extends React.Component {
   }
 
   render() {
-    var { context, beaconHistory } = this.props;
+    var { context } = this.props;
 
     var mtRainerIcon, PennForestsIcon;
     var far = false;
@@ -127,8 +125,6 @@ class HallOfBotanyView extends React.Component {
         mtRainerIcon = require('../img/Close.png');
       }
 
-    } else if (beaconHistory.indexOf('Mt. Rainer') > -1) {
-      mtRainerIcon = require('../img/Visited.png');
     }
 
     PennForestsIcon = require('../img/Active.png');
@@ -139,9 +135,6 @@ class HallOfBotanyView extends React.Component {
       } else if (close) {
         PennForestsIcon = require('../img/Close.png');
       }
-
-    } else if (beaconHistory.indexOf('Pennsylvania Forests') > -1) {
-      PennForestsIcon = require('../img/Visited.png');
     }
 
     return (

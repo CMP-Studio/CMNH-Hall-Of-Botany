@@ -7,7 +7,6 @@ function mapStateToProps(state) {
   return {
     context: state.context,
     audio: state.audio,
-    beaconHistory: state.beaconHistory,
   };
 }
 
