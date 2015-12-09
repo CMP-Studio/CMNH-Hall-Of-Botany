@@ -5,7 +5,7 @@ import * as HallOfBotanyActions from '../actions/actions';
 
 function mapStateToProps(state) {
   return {
-    context: state.context,
+    activeBeacon: state.activeBeacon,
     audio: state.audio,
   };
 }

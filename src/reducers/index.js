@@ -1,10 +1,10 @@
 
 import { combineReducers } from 'redux';
-import context from './context';
+import activeBeacon from './activeBeacon';
 import audio from './audio';
 
 const rootReducer = combineReducers({
-  context,
+  activeBeacon,
   audio,
 });
 

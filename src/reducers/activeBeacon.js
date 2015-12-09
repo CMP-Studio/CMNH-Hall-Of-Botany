@@ -1,5 +1,5 @@
 
-import { SWITCH_CONTEXT } from '../actions/actions';
+import { CHANGE_ACTIVE_BEACON } from '../actions/actions';
 
 const initalState = {
   title: '', 
@@ -8,12 +8,13 @@ const initalState = {
   proximity: 0,
 };
 
-export default function context(state = initalState, action) {
+export default function activeBeacon(state = initalState, action) {
   switch (action.type) {
-    case SWITCH_CONTEXT:
+    case CHANGE_ACTIVE_BEACON:
+
       return Object.assign({}, 
           state, 
-          action.beaconInfo, 
+          action.beacon, 
           {'proximity' : action.proximity}
         );
 

@@ -2,15 +2,15 @@
  * action types
  */
 
-export const SWITCH_CONTEXT = 'SWITCH_CONTEXT'
+export const CHANGE_ACTIVE_BEACON = 'CHANGE_ACTIVE_BEACON'
 export const SWITCH_AUDIO = 'SWITCH_AUDIO'
 
 /*
  * action creators
  */
 
-export function switchContext(beaconInfo, proximity) {
-  return { type: SWITCH_CONTEXT, beaconInfo: beaconInfo,  proximity: proximity}
+export function changeActiveBeacon(beacon, proximity) {
+  return { type: CHANGE_ACTIVE_BEACON, beacon: beacon,  proximity: proximity}
 }
 
 export function switchAudio(audioSrc, state, volume) {

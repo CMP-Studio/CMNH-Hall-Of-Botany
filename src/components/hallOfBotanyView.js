@@ -46,19 +46,19 @@ const {
 class HallOfBotanyView extends React.Component {
   static get propTypes() {
     return {
-      context: PropTypes.shape({
+      activeBeacon: PropTypes.shape({
         title: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired,
         audioSrc: PropTypes.string.isRequired,
         proximity: PropTypes.number.isRequired,
       }).isRequired,
       switchAudio: PropTypes.func.isRequired,
-      switchContext: PropTypes.func.isRequired,
+      changeActiveBeacon: PropTypes.func.isRequired,
     };
   }
 
   componentDidMount() {
-    const { switchAudio, switchContext, context } = this.props;
+    const { switchAudio, changeActiveBeacon, activeBeacon } = this.props;
 
     const notificationText = "Do you hear that? Something is playing faintly in the background, you should open the Hall Of Botany app and hear it yourself."
     BeaconManager.startTracking(proximityUUID, beaconRegionID, notificationText);
@@ -78,7 +78,7 @@ class HallOfBotanyView extends React.Component {
           break;
         case PROXIMITIES.UNKNOWN:
           // Keep old proximity
-          proximity = context.proximity;
+          proximity = activeBeacon.proximity;
           break;
         default:
           proximity = 1;
@@ -90,8 +90,8 @@ class HallOfBotanyView extends React.Component {
         detectedBeacon = Beacons.None;
       }
 
+      changeActiveBeacon(detectedBeacon, proximity);
       switchAudio(detectedBeacon.audioSrc, 'play', proximity * 0.5);
-      switchContext(detectedBeacon, proximity);
     });
   }
 
@@ -103,10 +103,10 @@ class HallOfBotanyView extends React.Component {
   }
 
   render() {
-    var { context } = this.props;
+    var { activeBeacon } = this.props;
 
     var activeImage;
-    var title = context.title;
+    var title = activeBeacon.title;
 
     if (title === 'Mt. Rainer') {
       activeImage = require('../img/MtRainer.jpg');
@@ -115,6 +115,8 @@ class HallOfBotanyView extends React.Component {
     } else {
       title = "Please walk around to \nexperience this exhibit";
     }
+
+    console.log(activeBeacon.proximity);
 
     return (
       <View style={{backgroundColor: 'lightGray'}}>
@@ -128,7 +130,7 @@ class HallOfBotanyView extends React.Component {
         <View style={styles.separator} />
 
         <View style={styles.container}>
-          <Image style={{height: 250, resizeMode: 'contain', opacity: (0.5 * context.proximity)}} source={activeImage} />
+          <Image style={{height: 250, resizeMode: 'contain', opacity: (0.5 * activeBeacon.proximity)}} source={activeImage} />
         </View>
 
         <View style={styles.container, {height: 253}}>
@@ -140,7 +142,7 @@ class HallOfBotanyView extends React.Component {
 
           <View style={{flex: 2}}>
             <Text style={styles.text}>
-              {context.text}
+              {activeBeacon.text}
             </Text>
           </View>
 
