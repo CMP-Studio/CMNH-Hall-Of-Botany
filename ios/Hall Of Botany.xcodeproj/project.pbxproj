@@ -120,12 +120,12 @@
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
 		00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTNetwork.xcodeproj; path = "../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj"; sourceTree = "<group>"; };
 		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* Hall Of Botany.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hall Of Botany.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* Hall of Botany.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hall of Botany.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* Hall_Of_BotanyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hall_Of_BotanyTests.m; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Hall Of Botany.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hall Of Botany.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Hall of Botany.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hall of Botany.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Hall_Of_Botany/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Hall_Of_Botany/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -262,8 +262,7 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				3236089C1C0F2D0F0084B161 /* Hall_Of_Botany-Bridging-Header.h */,
 				32846A021C11E5C300AB0A05 /* SwiftyTimer.swift */,
-				32D4FE9D1C109D83001A9CCB /* WaterSoundsLoop.mp3 */,
-				32C782A31C12111300BEAF3A /* BirdSoundsLoop.mp3 */,
+				3279673F1C19E19500F04C85 /* Resources */,
 				32D4FE9C1C109D4B001A9CCB /* AudioManager */,
 				32D4FE8D1C109B59001A9CCB /* BeaconManager */,
 			);
@@ -276,6 +275,15 @@
 				146834041AC3E56700842450 /* libReact.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		3279673F1C19E19500F04C85 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				32C782A31C12111300BEAF3A /* BirdSoundsLoop.mp3 */,
+				32D4FE9D1C109D83001A9CCB /* WaterSoundsLoop.mp3 */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		32D4FE8D1C109B59001A9CCB /* BeaconManager */ = {
@@ -345,8 +353,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Hall Of Botany.app */,
-				00E356EE1AD99517003FC87E /* Hall Of Botany.xctest */,
+				13B07F961A680F5B00A75B9A /* Hall of Botany.app */,
+				00E356EE1AD99517003FC87E /* Hall of Botany.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -363,9 +371,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* Hall Of BotanyTests */ = {
+		00E356ED1AD99517003FC87E /* Hall of BotanyTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "Hall Of BotanyTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "Hall of BotanyTests" */;
 			buildPhases = (
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
@@ -376,14 +384,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = "Hall Of BotanyTests";
+			name = "Hall of BotanyTests";
 			productName = Hall_Of_BotanyTests;
-			productReference = 00E356EE1AD99517003FC87E /* Hall Of Botany.xctest */;
+			productReference = 00E356EE1AD99517003FC87E /* Hall of Botany.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* Hall Of Botany */ = {
+		13B07F861A680F5B00A75B9A /* Hall of Botany */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Hall Of Botany" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Hall of Botany" */;
 			buildPhases = (
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
@@ -394,9 +402,9 @@
 			);
 			dependencies = (
 			);
-			name = "Hall Of Botany";
+			name = "Hall of Botany";
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* Hall Of Botany.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Hall of Botany.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -407,7 +415,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0710;
-				ORGANIZATIONNAME = Facebook;
+				ORGANIZATIONNAME = "Carnegie Museums of Pittsburgh";
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
@@ -422,7 +430,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Hall Of Botany" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Hall of Botany" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -477,8 +485,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* Hall Of Botany */,
-				00E356ED1AD99517003FC87E /* Hall Of BotanyTests */,
+				13B07F861A680F5B00A75B9A /* Hall of Botany */,
+				00E356ED1AD99517003FC87E /* Hall of BotanyTests */,
 			);
 		};
 /* End PBXProject section */
@@ -622,7 +630,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* Hall Of Botany */;
+			target = 13B07F861A680F5B00A75B9A /* Hall of Botany */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -656,8 +664,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "Hall Of Botany";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hall Of Botany.app/Hall Of Botany";
+				PRODUCT_NAME = "Hall of Botany";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hall of Botany.app/Hall of Botany";
 			};
 			name = Debug;
 		};
@@ -674,8 +682,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "Hall Of Botany";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hall Of Botany.app/Hall Of Botany";
+				PRODUCT_NAME = "Hall of Botany";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hall of Botany.app/Hall of Botany";
 			};
 			name = Release;
 		};
@@ -698,8 +706,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "Hall Of Botany";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.carnegie.Hall-of-Botany";
+				PRODUCT_NAME = "Hall of Botany";
 				SWIFT_OBJC_BRIDGING_HEADER = "Hall_Of_Botany-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -723,8 +731,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "Hall Of Botany";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.carnegie.Hall-of-Botany";
+				PRODUCT_NAME = "Hall of Botany";
 				SWIFT_OBJC_BRIDGING_HEADER = "Hall_Of_Botany-Bridging-Header.h";
 			};
 			name = Release;
@@ -821,7 +829,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "Hall Of BotanyTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "Hall of BotanyTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -830,7 +838,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Hall Of Botany" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Hall of Botany" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -839,7 +847,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Hall Of Botany" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Hall of Botany" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

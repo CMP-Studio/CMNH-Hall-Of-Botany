@@ -1,9 +1,9 @@
 //
 //  AudioManagerBridge.m
-//  Hall_Of_Botany
+//  Hall of Botany
 //
-//  Created by Ruben NIculcea on 12/3/15.
-//  Copyright © 2015 Facebook. All rights reserved.
+//  Created by Ruben Niculcea on 12/3/15.
+//  Copyright © 2015 Carnegie Museums of Pittsburgh. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

@@ -1,5 +1,9 @@
 //
-//  Use this file to import your target's public headers that you would like to expose to Swift.
+//  Hall_Of_Botany-Bridging-Header.h
+//  Hall of Botany
+//
+//  Created by Ruben Niculcea on 12/3/15.
+//  Copyright © 2015 Carnegie Museums of Pittsburgh. All rights reserved.
 //
 
 #ifndef Hall_Of_Botany_Bridging_Header_h
