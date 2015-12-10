@@ -25,6 +25,21 @@ class AudioManager: NSObject {
     super.init()
   }
   
+  @objc func prepareForBackgroundAudio() {
+    do {
+      try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+      print("AVAudioSession Category Playback OK")
+      do {
+        try AVAudioSession.sharedInstance().setActive(true)
+        print("AVAudioSession is Active")
+      } catch let error as NSError {
+        print(error.localizedDescription)
+      }
+    } catch let error as NSError {
+      print(error.localizedDescription)
+    }
+  }
+  
   @objc func loadAudio(audio: String) {
     if audio == "" || audio == audioSrc {
       return
@@ -49,19 +64,24 @@ class AudioManager: NSObject {
   
   @objc func adjustVolume(volume: Double) {
     if let _player = player {
-      if finished && (volume != Double(_player.volume)) {
-        finished = false
-        fadetoVolume(volume) {
-          self.finished = true
-        }
+      if volume != Double(_player.volume) {
+        fadetoVolume(volume)
       }
+    }
+  }
+  
+  @objc func pauseAudio() {
+    if let _player = player {
+      _player.pause()
     }
   }
   
   @objc func stopAudio() {
     if let _player = player {
-      _player.stop()
-      audioSrc = ""
+      fadetoVolume(0.0) {
+        _player.stop()
+        self.audioSrc = ""
+      }
     }
   }
   
@@ -69,40 +89,47 @@ class AudioManager: NSObject {
     duration: Double = 2.0,
     velocity: Double = 2.0,
     onFinished: (()->())? = nil) {
+    
+    if let _timer = timer {
+      if _timer.valid {
+        self.timer!.invalidate()
+        self.timer = nil
+      }
+    }
       
-      var currentStep = 0.0;
-      let totalSteps = duration * volumeAlterationsPerSecond
-      let fromVolume = Double(player!.volume)
+    var currentStep = 0.0;
+    let totalSteps = duration * volumeAlterationsPerSecond
+    let fromVolume = Double(player!.volume)
       
-      // React Native Modules do not run on the main thread
-      // and NSTimer needs to be ran on the main thread to work.
-      
-      // TODO: Move off of main thread in order to prevent UI Lock up
-      dispatch_async(dispatch_get_main_queue()) {
-        self.timer = NSTimer.every(1 / self.volumeAlterationsPerSecond) {
-          var volumeMultiplier, newVolume, progress: Double
+    // React Native Modules do not run on the main thread
+    // and NSTimer needs to be ran on the main thread to work.
+    
+    // TODO: Move off of main thread in order to prevent UI Lock up
+    dispatch_async(dispatch_get_main_queue()) {
+      self.timer = NSTimer.every(1 / self.volumeAlterationsPerSecond) {
+        var volumeMultiplier, newVolume, progress: Double
+        
+        if currentStep > totalSteps {
+          self.player!.volume = Float(toVolume)
+          self.timer!.invalidate()
+          self.timer = nil
+          onFinished?()
+        }
+        
+        progress = currentStep / totalSteps
+        
+        if fromVolume < toVolume {
+          volumeMultiplier = self.fadeInVolumeMultiplier(progress, velocity: velocity)
+          newVolume = fromVolume + (toVolume - fromVolume) * volumeMultiplier
           
-          if currentStep > totalSteps {
-            self.player!.volume = Float(toVolume)
-            self.timer!.invalidate()
-            self.timer = nil
-            onFinished?()
-          }
-          
-          progress = currentStep / totalSteps
-          
-          if fromVolume < toVolume {
-            volumeMultiplier = self.fadeInVolumeMultiplier(progress, velocity: velocity)
-            newVolume = fromVolume + (toVolume - fromVolume) * volumeMultiplier
-            
-          } else {
-            volumeMultiplier = self.fadeOutVolumeMultiplier(progress, velocity: velocity)
-            newVolume = toVolume - (toVolume - fromVolume) * volumeMultiplier
-          }
-          
-          self.player!.volume = Float(newVolume)
-          
-          currentStep += 1
+        } else {
+          volumeMultiplier = self.fadeOutVolumeMultiplier(progress, velocity: velocity)
+          newVolume = toVolume - (toVolume - fromVolume) * volumeMultiplier
+        }
+        
+        self.player!.volume = Float(newVolume)
+        
+        currentStep += 1
       }
     }
   }

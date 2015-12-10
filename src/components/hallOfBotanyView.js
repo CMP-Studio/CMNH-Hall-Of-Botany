@@ -3,6 +3,7 @@
 
 const React = require('react-native');
 const BeaconManager = React.NativeModules.BeaconManager;
+const AudioManager = React.NativeModules.AudioManager;
 
 const proximityUUID = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D';
 const beaconRegionID = 'Hall Of Botany';
@@ -64,8 +65,9 @@ class HallOfBotanyView extends React.Component {
   componentDidMount() {
     const notificationText = "Do you hear that? Something is playing faintly in the background, you should open the Hall Of Botany app and hear it yourself.";
     BeaconManager.startTracking(proximityUUID, beaconRegionID, notificationText);
-
     NativeAppEventEmitter.addListener("BeaconManagerBeaconPing", (body) => this.beaconNotificationPing(body));
+
+    AudioManager.prepareForBackgroundAudio();
   }
 
   beaconNotificationPing(body) {
