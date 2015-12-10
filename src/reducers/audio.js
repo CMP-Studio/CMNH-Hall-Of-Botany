@@ -1,35 +1,22 @@
 
-import { SWITCH_AUDIO } from '../actions/actions';
-
-const React = require('react-native');
-const AudioManager = React.NativeModules.AudioManager;
+import { LOAD_AUDIO, ADJUST_AUDIO_VOLUME, STOP_AUDIO, AudioStates } from '../actions/actions';
 
 const initalState = {
   audioSrc: '',
-  state: 'stop',
+  state: AudioStates.STOPPED,
   volume: 0.0,
 };
 
 export default function audio(state = initalState, action) {
   switch (action.type) {
-    case SWITCH_AUDIO:
-      if (action.state == 'play') {
-        if (state.audioSrc != action.audioSrc) {
-          AudioManager.loadAudio(action.audioSrc);
-        } else {
-          AudioManager.adjustVolume(action.volume);
-        }
-      } else {
-        AudioManager.stopAudio();
-      }
+    case LOAD_AUDIO:
+      return Object.assign({}, state, {audioSrc: action.audioSrc, state: action.state});
 
-      const newState = {
-        audioSrc: action.audioSrc,
-        state: action.state,
-        volume: action.volume
-      };
+    case ADJUST_AUDIO_VOLUME:
+      return Object.assign({}, state, {volume: action.volume});
 
-      return Object.assign({}, state, newState);
+    case STOP_AUDIO:
+      return Object.assign({}, state, {audioSrc: '', state: action.state});
 
     default:
       return state;

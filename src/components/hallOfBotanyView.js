@@ -12,18 +12,20 @@ const Beacons = {
     title: 'Mt. Rainer', 
     text: 'The sound of rushing water',
     audioSrc: 'WaterSoundsLoop.mp3',
-    proximity: 0},
+    proximity: 1
+  },
   '54445:31148': {
     title: 'Pennsylvania Forests', 
     text: 'Lovley bird noises',
     audioSrc: 'BirdSoundsLoop.mp3',
-    proximity: 0
+    proximity: 1
   },
   'None': {
     title: '', 
     text: '',
     audioSrc: '',
-    proximity: 0},
+    proximity: 0
+  },
 };
 
 const PROXIMITIES = {
@@ -52,47 +54,72 @@ class HallOfBotanyView extends React.Component {
         audioSrc: PropTypes.string.isRequired,
         proximity: PropTypes.number.isRequired,
       }).isRequired,
-      switchAudio: PropTypes.func.isRequired,
+      loadAudio: PropTypes.func.isRequired,
+      stopAudio: PropTypes.func.isRequired,
+      adjustAudioVolume: PropTypes.func.isRequired,
       changeActiveBeacon: PropTypes.func.isRequired,
     };
   }
 
   componentDidMount() {
-    const { switchAudio, changeActiveBeacon, activeBeacon } = this.props;
-
-    const notificationText = "Do you hear that? Something is playing faintly in the background, you should open the Hall Of Botany app and hear it yourself."
+    const notificationText = "Do you hear that? Something is playing faintly in the background, you should open the Hall Of Botany app and hear it yourself.";
     BeaconManager.startTracking(proximityUUID, beaconRegionID, notificationText);
 
-    NativeAppEventEmitter.addListener("BeaconManagerBeaconPing", ( body ) => {
-      let detectedBeacon;
-      let proximity = 1;
-      const beaconID = body.major + ':' + body.minor;
+    NativeAppEventEmitter.addListener("BeaconManagerBeaconPing", (body) => this.beaconNotificationPing(body));
+  }
 
-      switch (body.proximity) {
-        case PROXIMITIES.IMMEDIATE:
-        case PROXIMITIES.NEAR:
-          proximity = 2;
-          break;
-        case PROXIMITIES.FAR:
-          proximity = 1;
-          break;
-        case PROXIMITIES.UNKNOWN:
-          // Keep old proximity
-          proximity = activeBeacon.proximity;
-          break;
-        default:
-          proximity = 1;
+  beaconNotificationPing(body) {
+    const { loadAudio, adjustAudioVolume, stopAudio, changeActiveBeacon, activeBeacon } = this.props;
+
+    let detectedBeacon;
+    let proximity = 1;
+    const beaconID = body.major + ':' + body.minor;
+
+    switch (body.proximity) {
+      case PROXIMITIES.IMMEDIATE:
+      case PROXIMITIES.NEAR:
+        proximity = 2;
+        break;
+      case PROXIMITIES.FAR:
+        proximity = 1;
+        break;
+      case PROXIMITIES.UNKNOWN:
+        // Keep old proximity
+        proximity = activeBeacon.proximity;
+        break;
+      default:
+        proximity = 1;
+    }
+
+    if (Beacons[beaconID] !== undefined) {
+      detectedBeacon = Beacons[beaconID];
+    } else {
+      detectedBeacon = Beacons.None;
+    }
+
+    // State transitions
+    // None -> Beacon = loadAudio
+    // Beacon -> Same Beacon = adjustAudioVolume
+    // Beacon -> Different Beacon = loadAudio
+    // Beacon -> None = stopAudio
+    if ((activeBeacon.title === Beacons.None.title) && 
+        (detectedBeacon.title !== Beacons.None.title)) {
+      loadAudio(detectedBeacon.audioSrc);
+
+    } else if (activeBeacon.title !== Beacons.None.title) {
+
+      if (activeBeacon.title === detectedBeacon.title) {
+        adjustAudioVolume(proximity);
+
+      } else if (detectedBeacon.title === Beacons.None.title) {
+        stopAudio();
+
+      } else if (activeBeacon.title !== detectedBeacon.title) {
+        loadAudio(detectedBeacon.audioSrc);
       }
+    }
 
-      if (Beacons[beaconID] !== undefined) {
-        detectedBeacon = Beacons[beaconID];
-      } else {
-        detectedBeacon = Beacons.None;
-      }
-
-      changeActiveBeacon(detectedBeacon, proximity);
-      switchAudio(detectedBeacon.audioSrc, 'play', proximity * 0.5);
-    });
+    changeActiveBeacon(detectedBeacon, proximity);
   }
 
   componentWillUnmount() {
@@ -115,8 +142,6 @@ class HallOfBotanyView extends React.Component {
     } else {
       title = "Please walk around to \nexperience this exhibit";
     }
-
-    console.log(activeBeacon.proximity);
 
     return (
       <View style={{backgroundColor: 'lightGray'}}>
