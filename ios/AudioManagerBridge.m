@@ -14,6 +14,8 @@
 
 RCT_EXTERN_METHOD(loadAudio:(NSString *)audio)
 RCT_EXTERN_METHOD(adjustVolume:(double)volume)
+
+RCT_EXTERN_METHOD(playAudio)
 RCT_EXTERN_METHOD(pauseAudio)
 RCT_EXTERN_METHOD(stopAudio)
 

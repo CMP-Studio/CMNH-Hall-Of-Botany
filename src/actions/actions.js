@@ -7,9 +7,12 @@ const AudioManager = React.NativeModules.AudioManager;
  */
 
 export const CHANGE_ACTIVE_BEACON = 'CHANGE_ACTIVE_BEACON'
-export const LOAD_AUDIO = 'LOAD_AUDIO '
+
+export const LOAD_AUDIO = 'LOAD_AUDIO'
+export const STOP_AUDIO = 'STOP_AUDIO'
+export const PLAY_AUDIO = 'PLAY_AUDIO'
+export const PAUSE_AUDIO = 'PAUSE_AUDIO'
 export const ADJUST_AUDIO_VOLUME = 'ADJUST_AUDIO_VOLUME'
-export const STOP_AUDIO = 'STOP_AUDIO '
 
 /*
  * other constants
@@ -18,6 +21,7 @@ export const STOP_AUDIO = 'STOP_AUDIO '
 export const AudioStates = {
   PLAYING: 'PLAYING',
   STOPPED: 'STOPPED',
+  PAUSED: 'PAUSED'
 }
 
 /*
@@ -41,4 +45,14 @@ export function adjustAudioVolume(volume) {
 export function stopAudio() {
   AudioManager.stopAudio();
   return { type: STOP_AUDIO, state: AudioStates.STOPPED}
+}
+
+export function pauseAudio() {
+  AudioManager.pauseAudio();
+  return { type: PAUSE_AUDIO, state: AudioStates.PAUSED}
+}
+
+export function playAudio() {
+  AudioManager.playAudio();
+  return { type: PLAY_AUDIO, state: AudioStates.PLAYING}
 }

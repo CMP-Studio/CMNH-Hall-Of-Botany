@@ -5,7 +5,7 @@ const React = require('react-native');
 const BeaconManager = React.NativeModules.BeaconManager;
 const AudioManager = React.NativeModules.AudioManager;
 
-const proximityUUID = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D';
+const proximityUUID = '3E75CE42-FCB1-C4CF-2A09-7595CD914F96';
 const beaconRegionID = 'Hall Of Botany';
 
 const Beacons = {

@@ -1,5 +1,5 @@
 
-import { LOAD_AUDIO, ADJUST_AUDIO_VOLUME, STOP_AUDIO, AudioStates } from '../actions/actions';
+import { LOAD_AUDIO, ADJUST_AUDIO_VOLUME, STOP_AUDIO, PLAY_AUDIO, PAUSE_AUDIO, AudioStates } from '../actions/actions';
 
 const initalState = {
   audioSrc: '',
@@ -16,6 +16,8 @@ export default function audio(state = initalState, action) {
       return Object.assign({}, state, {volume: action.volume});
 
     case STOP_AUDIO:
+    case PLAY_AUDIO:
+    case PAUSE_AUDIO:
       return Object.assign({}, state, {audioSrc: '', state: action.state});
 
     default:

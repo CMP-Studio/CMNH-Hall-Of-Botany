@@ -19,7 +19,7 @@ class AudioManager: NSObject {
   var audioSrc = ""
   var player:AVAudioPlayer?
   var timer:NSTimer?
-  var finished = true
+  var finishedChangingAudio = true
 
   override init() {
     super.init()
@@ -46,34 +46,47 @@ class AudioManager: NSObject {
     }
     
     let soundURL = CFBundleCopyResourceURL(CFBundleGetMainBundle(), audio, nil, nil)
-    
-    do {
-      if audioSrc != "" {
-        stopAudio()
+  
+    func prepareAudio() {
+      do {
+        player = try AVAudioPlayer(contentsOfURL: soundURL)
+        audioSrc = audio
+        player!.numberOfLoops = -1
+        player!.play()
+        player!.volume = 0.0
+        finishedChangingAudio = true;
+        
+      } catch let error as NSError {
+        print("Error - AudioManager - \(error.domain)")
       }
+    }
+    
+    if let _player = player {
+      finishedChangingAudio = false;
       
-      player = try AVAudioPlayer(contentsOfURL: soundURL)
-      self.audioSrc = audio
-      player!.numberOfLoops = -1
-      player!.play()
-      player!.volume = 0.0
-    } catch let error as NSError {
-      print("Error - AudioManager - \(error.domain)")
+      fadetoVolume(0.0) {
+        _player.stop()
+        prepareAudio()
+      }
+    } else {
+      prepareAudio()
     }
   }
   
   @objc func adjustVolume(volume: Double) {
     if let _player = player {
-      if volume != Double(_player.volume) {
+      if finishedChangingAudio && (volume != Double(_player.volume)) {
         fadetoVolume(volume)
       }
     }
   }
   
   @objc func pauseAudio() {
-    if let _player = player {
-      _player.pause()
-    }
+    player?.pause()
+  }
+  
+  @objc func playAudio() {
+    player?.play()
   }
   
   @objc func stopAudio() {
