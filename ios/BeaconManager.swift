@@ -9,22 +9,29 @@
 import Foundation
 
 @objc(BeaconManager)
-class BeaconManager: NSObject, ESTBeaconManagerDelegate {
+class BeaconManager: NSObject, CBPeripheralManagerDelegate, ESTBeaconManagerDelegate {
   
-  // Swift doesn't have synthesize - just define the variable
   var bridge: RCTBridge!
   let eventName = "BeaconManagerBeaconPing"
   
   let beaconManager = ESTBeaconManager()
   var beaconRegion = CLBeaconRegion()
+  var hasAlwaysAuthorization = false;
+  
+  var bluetoothPeripheralManager: CBPeripheralManager?
+  var bluetoothActive = false;
   
   var notificationText = String()
   
   override init() {
     super.init()
     
+    let options = [CBCentralManagerOptionShowPowerAlertKey:0] // Don't show bluetooth popover
+    bluetoothPeripheralManager = CBPeripheralManager(delegate: self, queue: nil, options: options)
+    
     beaconManager.delegate = self
     beaconManager.requestAlwaysAuthorization()
+    hasAlwaysAuthorization = beaconManager.isAuthorizedForMonitoring()
   }
   
   @objc func startTracking(uuid: String, identifier: String, notificationText: String) {
@@ -47,40 +54,49 @@ class BeaconManager: NSObject, ESTBeaconManagerDelegate {
     beaconManager.stopRangingBeaconsInRegion(self.beaconRegion)
   }
   
+  // MARK: - ESTBeaconManagerDelegate functions
+  
   func beaconManager(manager: AnyObject, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
-    var eventBody = ["major" : "", "minor" : "", "proximity" : ""]
+    var eventBody = ["major" : "", "minor" : "", "rssi": 0]
     
     if let nearestBeacon = beacons.first {
-      var string = ""
-      
-      switch nearestBeacon.proximity {
-      case CLProximity.Unknown :
-        string = "UNKNOWN"
-      case CLProximity.Immediate :
-        string = "IMMEDIATE"
-      case CLProximity.Near :
-        string = "NEAR"
-      case CLProximity.Far :
-        string = "FAR"
-      }
-      
-      eventBody = ["major" : String(nearestBeacon.major),
-                   "minor" : String(nearestBeacon.minor),
-                   "proximity" : string]
+      eventBody = ["major": String(nearestBeacon.major),
+                   "minor": String(nearestBeacon.minor),
+                   "rssi": nearestBeacon.rssi]
     }
     
     bridge.eventDispatcher.sendAppEventWithName(eventName, body: eventBody)
-  }
-  
-  func beaconManager(manager: AnyObject, rangingBeaconsDidFailForRegion region: CLBeaconRegion?, withError error: NSError) {
-    print("Error - BeaconManager - \(error.domain)")
   }
   
   func beaconManager(manager: AnyObject, didEnterRegion region: CLBeaconRegion) {
     let notification = UILocalNotification()
     
     notification.alertBody = notificationText
+    
     UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+  }
+  
+  func beaconManager(manager: AnyObject, rangingBeaconsDidFailForRegion region: CLBeaconRegion?, withError error: NSError) {
+    print("Error - BeaconManager - \(error.localizedDescription)")
+  }
+  
+  func beaconManager(manager: AnyObject, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    hasAlwaysAuthorization = beaconManager.isAuthorizedForMonitoring()
+  }
+  
+  // MARK: - CBPeripheralManagerDelegate functions
+  
+  func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
+    if peripheral.state == CBPeripheralManagerState.PoweredOn {
+      bluetoothActive = true
+    } else if peripheral.state == CBPeripheralManagerState.PoweredOff {
+      bluetoothActive = false
+    } else if peripheral.state == CBPeripheralManagerState.Unsupported {
+      // This is never hit as every modern iOS device has bluetooth
+      // Expect the simulator...
+    } else if peripheral.state == CBPeripheralManagerState.Unauthorized {
+      // This is never hit as we only use bluetooth for location
+    }
   }
   
 }
