@@ -6,8 +6,12 @@ const AudioManager = React.NativeModules.AudioManager;
  * action types
  */
 
+// Beacon Actions
 export const CHANGE_ACTIVE_BEACON = 'CHANGE_ACTIVE_BEACON'
+export const UPDATE_ACTIVE_BEACON = 'UPDATE_ACTIVE_BEACON'
+export const NO_ACTIVE_BEACON = 'NO_ACTIVE_BEACON'
 
+// Audio Actions
 export const LOAD_AUDIO = 'LOAD_AUDIO'
 export const STOP_AUDIO = 'STOP_AUDIO'
 export const PLAY_AUDIO = 'PLAY_AUDIO'
@@ -28,8 +32,16 @@ export const AudioStates = {
  * action creators
  */
 
-export function changeActiveBeacon(beacon, proximity) {
-  return { type: CHANGE_ACTIVE_BEACON, beacon: beacon,  proximity: proximity}
+export function changeActiveBeacon(beacon, rssi) {
+  return { type: CHANGE_ACTIVE_BEACON, beacon: beacon,  rssi: rssi}
+}
+
+export function updateActiveBeacon(rssi) {
+  return { type: UPDATE_ACTIVE_BEACON, rssi: rssi}
+}
+
+export function noActiveBeacon() {
+  return { type: NO_ACTIVE_BEACON }
 }
 
 export function loadAudio(audioSrc) {

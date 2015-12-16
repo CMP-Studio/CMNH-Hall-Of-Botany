@@ -13,27 +13,17 @@ const Beacons = {
     title: 'Mt. Rainer', 
     text: 'The sound of rushing water',
     audioSrc: 'WaterSoundsLoop.mp3',
-    proximity: 1
   },
   '54445:31148': {
     title: 'Pennsylvania Forests', 
     text: 'Lovley bird noises',
     audioSrc: 'BirdSoundsLoop.mp3',
-    proximity: 1
   },
   'None': {
     title: '', 
     text: '',
     audioSrc: '',
-    proximity: 0
   },
-};
-
-const PROXIMITIES = {
-  IMMEDIATE: 'IMMEDIATE',
-  NEAR: 'NEAR',
-  FAR: 'FAR',
-  UNKNOWN: 'UNKNOWN',
 };
 
 const {
@@ -53,12 +43,7 @@ class HallOfBotanyView extends React.Component {
         title: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired,
         audioSrc: PropTypes.string.isRequired,
-        proximity: PropTypes.number.isRequired,
       }).isRequired,
-      loadAudio: PropTypes.func.isRequired,
-      stopAudio: PropTypes.func.isRequired,
-      adjustAudioVolume: PropTypes.func.isRequired,
-      changeActiveBeacon: PropTypes.func.isRequired,
     };
   }
 
@@ -71,27 +56,10 @@ class HallOfBotanyView extends React.Component {
   }
 
   beaconNotificationPing(body) {
-    const { loadAudio, adjustAudioVolume, stopAudio, changeActiveBeacon, activeBeacon } = this.props;
+    const { loadAudio, adjustAudioVolume, stopAudio, changeActiveBeacon, noActiveBeacon, updateActiveBeacon, activeBeacon } = this.props;
 
     let detectedBeacon;
-    let proximity = 1;
     const beaconID = body.major + ':' + body.minor;
-
-    switch (body.proximity) {
-      case PROXIMITIES.IMMEDIATE:
-      case PROXIMITIES.NEAR:
-        proximity = 2;
-        break;
-      case PROXIMITIES.FAR:
-        proximity = 1;
-        break;
-      case PROXIMITIES.UNKNOWN:
-        // Keep old proximity
-        proximity = activeBeacon.proximity;
-        break;
-      default:
-        proximity = 1;
-    }
 
     if (Beacons[beaconID] !== undefined) {
       detectedBeacon = Beacons[beaconID];
@@ -107,28 +75,32 @@ class HallOfBotanyView extends React.Component {
     if ((activeBeacon.title === Beacons.None.title) && 
         (detectedBeacon.title !== Beacons.None.title)) {
       loadAudio(detectedBeacon.audioSrc);
+      changeActiveBeacon(detectedBeacon, body.rssi);
 
     } else if (activeBeacon.title !== Beacons.None.title) {
 
       if (activeBeacon.title === detectedBeacon.title) {
-        adjustAudioVolume(proximity);
+        adjustAudioVolume(1.0);
+        updateActiveBeacon(body.rssi);
 
       } else if (detectedBeacon.title === Beacons.None.title) {
         stopAudio();
+        noActiveBeacon();
 
       } else if (activeBeacon.title !== detectedBeacon.title) {
         loadAudio(detectedBeacon.audioSrc);
+        changeActiveBeacon(detectedBeacon, body.rssi);
       }
     }
-
-    changeActiveBeacon(detectedBeacon, proximity);
   }
 
   componentWillUnmount() {
-    const { switchAudio } = this.props;
+    const { stopAudio, noActiveBeacon } = this.props;
 
     BeaconManager.stopTracking();
-    switchAudio('', 'stop', 0.0);
+
+    stopAudio();
+    noActiveBeacon();
   }
 
   render() {
@@ -136,6 +108,7 @@ class HallOfBotanyView extends React.Component {
 
     var activeImage;
     var title = activeBeacon.title;
+    var text = activeBeacon.text;
 
     if (title === 'Mt. Rainer') {
       activeImage = require('../img/MtRainer.jpg');
@@ -157,7 +130,7 @@ class HallOfBotanyView extends React.Component {
         <View style={styles.separator} />
 
         <View style={styles.container}>
-          <Image style={{height: 250, resizeMode: 'contain', opacity: (0.5 * activeBeacon.proximity)}} source={activeImage} />
+          <Image style={{height: 250, resizeMode: 'contain'}} source={activeImage} />
         </View>
 
         <View style={styles.container, {height: 253}}>
@@ -169,7 +142,10 @@ class HallOfBotanyView extends React.Component {
 
           <View style={{flex: 2}}>
             <Text style={styles.text}>
-              {activeBeacon.text}
+              {text}
+            </Text>
+            <Text style={styles.text}>
+              RSSI: {activeBeacon.rssiRollingAverage}
             </Text>
           </View>
 
