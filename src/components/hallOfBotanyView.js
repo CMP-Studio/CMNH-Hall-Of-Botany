@@ -118,6 +118,8 @@ class HallOfBotanyView extends React.Component {
   }
 
   render() {
+    const debug = true;
+
     var { activeBeacon } = this.props;
 
     var imageOpacity = 0;
@@ -134,71 +136,76 @@ class HallOfBotanyView extends React.Component {
     }
 
     return (
-      <View style={{backgroundColor: 'lightGray'}}>
+      <View style={styles.container}>
+        <View>
+          <View style={styles.toolbar}>
+            <Text style={[styles.toolbarTitle, {paddingTop: 10}]}>
+              Hall Of Botany
+            </Text>
+          </View>
+          <View style={styles.separator} />
+        </View>
 
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>
-            Hall Of Botany
+        <View style={styles.body}>
+          <Image style={[styles.image, {opacity: imageOpacity}]} 
+                 source={this.loadBeaconImage(activeBeacon.imgSrc)} />
+
+          <Text style={styles.title}>
+            {title}
+          </Text>
+          <Text style={styles.text}>
+            {activeBeacon.text}
           </Text>
         </View>
 
-        <View style={styles.separator} />
-
-        <View style={styles.container}>
-          <Image style={{height: 250, resizeMode: 'contain', opacity: imageOpacity}} 
-                 source={this.loadBeaconImage(activeBeacon.imgSrc)} />
-        </View>
-
-        <View style={styles.container, {height: 253}}>
-          <View>
-            <Text style={styles.title}>
-              {title}
+        <View style={{opacity: debug}}>
+          <View style={styles.separator} />
+          <View style={styles.toolbar}>
+            <Text style={styles.toolbarTitle}>
+              Zone: {activeBeacon.zone}
             </Text>
           </View>
-
-          <View style={{flex: 2}}>
-            <Text style={styles.text}>
-              {activeBeacon.text}
-            </Text>
-             <Text style={styles.text}>
-              {activeBeacon.zone}
-            </Text>
-          </View>
-
         </View>
-
       </View>
     );
   }
 };
 
 const styles = StyleSheet.create({
-  header: {
-    height: 64,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
   container: {
-    flexDirection: 'row',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    flex: 1,
+  },
+  toolbar: {
+    height: 64,
+    backgroundColor: '#F5FCFF',
+    alignSelf: 'stretch',
     justifyContent: 'center',
-    alignItems: 'center',
+  },
+  toolbarTitle: {
+    fontSize: 20,
+    textAlign: 'center',
   },
   separator: {
     height: 1,
     backgroundColor: '#CCCCCC',
   },
+  body: {
+    flex: 2,
+  },
+  image: {
+    height: 250,
+    resizeMode: 'contain',
+    alignSelf: 'center',
+  },
   title: {
-    margin: 10,
+    margin: 20,
     fontSize: 18,
   },
   text: {
     fontSize: 14,
-    margin: 5,
-  },
-  headerTitle: {
-    paddingTop: 10,
-    fontSize: 20,
+    margin: 10,
   },
 });
 
