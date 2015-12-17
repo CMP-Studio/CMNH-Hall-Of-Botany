@@ -1,6 +1,8 @@
 
 'use strict';
 
+import { Zones } from '../reducers/activeBeacon';
+
 const React = require('react-native');
 const BeaconManager = React.NativeModules.BeaconManager;
 const AudioManager = React.NativeModules.AudioManager;
@@ -13,16 +15,19 @@ const Beacons = {
     title: 'Mt. Rainer', 
     text: 'The sound of rushing water',
     audioSrc: 'WaterSoundsLoop.mp3',
+    imgSrc: 'MtRainer.jpg',
   },
   '54445:31148': {
     title: 'Pennsylvania Forests', 
     text: 'Lovley bird noises',
     audioSrc: 'BirdSoundsLoop.mp3',
+    imgSrc: 'PennForrests.jpg',
   },
   'None': {
     title: '', 
     text: '',
     audioSrc: '',
+    imgSrc: '',
   },
 };
 
@@ -103,19 +108,29 @@ class HallOfBotanyView extends React.Component {
     noActiveBeacon();
   }
 
+  loadBeaconImage(imgName) {
+    // Require parameters must be static
+    if (imgName === 'MtRainer.jpg') {
+      return require('../img/MtRainer.jpg');
+    } else if (imgName === 'PennForrests.jpg') {
+      return require('../img/PennForrests.jpg');
+    }
+  }
+
   render() {
     var { activeBeacon } = this.props;
 
-    var activeImage;
+    var imageOpacity = 0;
     var title = activeBeacon.title;
-    var text = activeBeacon.text;
 
-    if (title === 'Mt. Rainer') {
-      activeImage = require('../img/MtRainer.jpg');
-    } else if (title === 'Pennsylvania Forests') {
-      activeImage = require('../img/PennForrests.jpg');
-    } else {
+    if (title === Beacons.None.title) {
       title = "Please walk around to \nexperience this exhibit";
+    }
+
+    if (activeBeacon.zone === Zones.NEAR) {
+      imageOpacity = 1.0;
+    } else if (activeBeacon.zone === Zones.FAR) {
+      imageOpacity = 0.5;
     }
 
     return (
@@ -130,7 +145,8 @@ class HallOfBotanyView extends React.Component {
         <View style={styles.separator} />
 
         <View style={styles.container}>
-          <Image style={{height: 250, resizeMode: 'contain'}} source={activeImage} />
+          <Image style={{height: 250, resizeMode: 'contain', opacity: imageOpacity}} 
+                 source={this.loadBeaconImage(activeBeacon.imgSrc)} />
         </View>
 
         <View style={styles.container, {height: 253}}>
@@ -142,10 +158,10 @@ class HallOfBotanyView extends React.Component {
 
           <View style={{flex: 2}}>
             <Text style={styles.text}>
-              {text}
+              {activeBeacon.text}
             </Text>
-            <Text style={styles.text}>
-              RSSI: {activeBeacon.rssiRollingAverage}
+             <Text style={styles.text}>
+              {activeBeacon.zone}
             </Text>
           </View>
 
