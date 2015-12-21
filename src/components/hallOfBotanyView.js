@@ -1,7 +1,9 @@
 
 'use strict';
 
-import { Zones } from '../reducers/activeBeacon';
+import { Zones } from '../actions/actions';
+import WalkAroundView from './walkAroundView';
+import BeaconView from './beaconView';
 
 const React = require('react-native');
 const BeaconManager = React.NativeModules.BeaconManager;
@@ -33,7 +35,6 @@ const Beacons = {
 
 const {
   StyleSheet,
-  ListView,
   Image,
   View,
   Text,
@@ -48,6 +49,7 @@ class HallOfBotanyView extends React.Component {
         title: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired,
         audioSrc: PropTypes.string.isRequired,
+        imgSrc: PropTypes.string.isRequired,
       }).isRequired,
     };
   }
@@ -61,7 +63,7 @@ class HallOfBotanyView extends React.Component {
   }
 
   beaconNotificationPing(body) {
-    const { loadAudio, adjustAudioVolume, stopAudio, changeActiveBeacon, noActiveBeacon, updateActiveBeacon, activeBeacon } = this.props;
+    const { loadAudio, adjustAudioVolume, stopAudio, changeActiveBeacon, clearActiveBeacon, updateActiveBeacon, activeBeacon } = this.props;
 
     let detectedBeacon;
     const beaconID = body.major + ':' + body.minor;
@@ -85,12 +87,21 @@ class HallOfBotanyView extends React.Component {
     } else if (activeBeacon.title !== Beacons.None.title) {
 
       if (activeBeacon.title === detectedBeacon.title) {
-        adjustAudioVolume(1.0);
+        let soundVolume = 0.0;
+
+        if (activeBeacon.zone === Zones.NEAR) {
+          soundVolume = 1.0;
+        } else if (activeBeacon.zone === Zones.FAR) {
+          soundVolume = 0.5;
+        }
+
+        // Update volume with last beacon proximity
+        adjustAudioVolume(soundVolume);
         updateActiveBeacon(body.rssi);
 
       } else if (detectedBeacon.title === Beacons.None.title) {
         stopAudio();
-        noActiveBeacon();
+        clearActiveBeacon();
 
       } else if (activeBeacon.title !== detectedBeacon.title) {
         loadAudio(detectedBeacon.audioSrc);
@@ -100,39 +111,31 @@ class HallOfBotanyView extends React.Component {
   }
 
   componentWillUnmount() {
-    const { stopAudio, noActiveBeacon } = this.props;
-
-    BeaconManager.stopTracking();
+    const { stopAudio, clearActiveBeacon } = this.props;
 
     stopAudio();
-    noActiveBeacon();
-  }
-
-  loadBeaconImage(imgName) {
-    // Require parameters must be static
-    if (imgName === 'MtRainer.jpg') {
-      return require('../img/MtRainer.jpg');
-    } else if (imgName === 'PennForrests.jpg') {
-      return require('../img/PennForrests.jpg');
-    }
+    clearActiveBeacon();
+    eaconManager.stopTracking();
   }
 
   render() {
+    const { activeBeacon } = this.props;
     const debug = true;
+    let body;
 
-    var { activeBeacon } = this.props;
+    if (activeBeacon.zone === Zones.UNKNOWN) {
+      body = (<WalkAroundView/>);
 
-    var imageOpacity = 0;
-    var title = activeBeacon.title;
+    } else {
+      let imageOpacity = 0.0;
 
-    if (title === Beacons.None.title) {
-      title = 'Please walk around to \nexperience this exhibit';
-    }
+      if (activeBeacon.zone === Zones.NEAR) {
+        imageOpacity = 1.0;
+      } else if (activeBeacon.zone === Zones.FAR) {
+        imageOpacity = 0.5;
+      }
 
-    if (activeBeacon.zone === Zones.NEAR) {
-      imageOpacity = 1.0;
-    } else if (activeBeacon.zone === Zones.FAR) {
-      imageOpacity = 0.5;
+      body = (<BeaconView beacon={activeBeacon} imageOpacity={imageOpacity}/>);
     }
 
     return (
@@ -147,15 +150,7 @@ class HallOfBotanyView extends React.Component {
         </View>
 
         <View style={styles.body}>
-          <Image style={[styles.image, {opacity: imageOpacity}]}
-                 source={this.loadBeaconImage(activeBeacon.imgSrc)} />
-
-          <Text style={styles.title}>
-            {title}
-          </Text>
-          <Text style={styles.text}>
-            {activeBeacon.text}
-          </Text>
+          {body}
         </View>
 
         <View style={{opacity: debug}}>
@@ -193,19 +188,6 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 2,
-  },
-  image: {
-    height: 250,
-    resizeMode: 'contain',
-    alignSelf: 'center',
-  },
-  title: {
-    margin: 20,
-    fontSize: 18,
-  },
-  text: {
-    fontSize: 14,
-    margin: 10,
   },
 });
 

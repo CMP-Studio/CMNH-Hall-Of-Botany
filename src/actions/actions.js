@@ -9,7 +9,7 @@ const AudioManager = React.NativeModules.AudioManager;
 // Beacon Actions
 export const CHANGE_ACTIVE_BEACON = 'CHANGE_ACTIVE_BEACON';
 export const UPDATE_ACTIVE_BEACON = 'UPDATE_ACTIVE_BEACON';
-export const NO_ACTIVE_BEACON = 'NO_ACTIVE_BEACON';
+export const CLEAR_ACTIVE_BEACON = 'CLEAR_ACTIVE_BEACON';
 
 // Audio Actions
 export const LOAD_AUDIO = 'LOAD_AUDIO';
@@ -21,6 +21,12 @@ export const ADJUST_AUDIO_VOLUME = 'ADJUST_AUDIO_VOLUME';
 /*
  * other constants
  */
+
+export const Zones = {
+  NEAR: 'NEAR',
+  FAR: 'FAR',
+  UNKNOWN: 'UNKNOWN',
+};
 
 export const AudioStates = {
   PLAYING: 'PLAYING',
@@ -40,8 +46,8 @@ export function updateActiveBeacon(rssi) {
   return { type: UPDATE_ACTIVE_BEACON, rssi: rssi};
 }
 
-export function noActiveBeacon() {
-  return { type: NO_ACTIVE_BEACON };
+export function clearActiveBeacon() {
+  return { type: CLEAR_ACTIVE_BEACON };
 }
 
 export function loadAudio(audioSrc) {

@@ -1,14 +1,8 @@
 
-import { CHANGE_ACTIVE_BEACON, UPDATE_ACTIVE_BEACON, NO_ACTIVE_BEACON } from '../actions/actions';
-
-export const Zones = {
-  NEAR: 'NEAR',
-  FAR: 'FAR',
-  UNKNOWN: 'UNKNOWN',
-}
+import { CHANGE_ACTIVE_BEACON, UPDATE_ACTIVE_BEACON, CLEAR_ACTIVE_BEACON, Zones } from '../actions/actions';
 
 const initalState = {
-  title: '', 
+  title: '',
   text: '',
   audioSrc: '',
   imgSrc: '',
@@ -26,7 +20,7 @@ function assignZone(rssi, lastZone) {
   let farUpperLimit = -90;
   let nearUpperLimit = -65;
 
-  // bounce boundaries up once entering a zone to prevent noise 
+  // bounce boundaries up once entering a zone to prevent noise
   // from causing constant zone changes
   if (lastZone == Zones.NEAR) {
     nearUpperLimit -= bounceAmmount;
@@ -39,7 +33,7 @@ function assignZone(rssi, lastZone) {
       return Zones.NEAR;
     } else if (signalStg >= farUpperLimit) {
       return Zones.FAR;
-    } 
+    }
 
   } else {
     return Zones.UNKNOWN;
@@ -48,15 +42,15 @@ function assignZone(rssi, lastZone) {
 
 export default function activeBeacon(state = initalState, action) {
   switch (action.type) {
-    case NO_ACTIVE_BEACON:
+    case CLEAR_ACTIVE_BEACON:
       return initalState;
 
     case CHANGE_ACTIVE_BEACON:
-      return Object.assign({}, 
-          state, 
+      return Object.assign({},
+          state,
           action.beacon,
           {
-            rssiHistory: [action.rssi], 
+            rssiHistory: [action.rssi],
             rssiRollingAverage: action.rssi,
             zone: assignZone(action.rssi, state.zone)
           }
@@ -81,8 +75,8 @@ export default function activeBeacon(state = initalState, action) {
 
       average = sum / history.length;
 
-      return Object.assign({}, 
-        state, 
+      return Object.assign({},
+        state,
         {
           rssiHistory: history,
           rssiRollingAverage: average,
