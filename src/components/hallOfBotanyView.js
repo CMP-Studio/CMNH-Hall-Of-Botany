@@ -12,19 +12,19 @@ const beaconRegionID = 'Hall Of Botany';
 
 const Beacons = {
   '41892:30560': {
-    title: 'Mt. Rainer', 
+    title: 'Mt. Rainer',
     text: 'The sound of rushing water',
     audioSrc: 'WaterSoundsLoop.mp3',
     imgSrc: 'MtRainer.jpg',
   },
   '54445:31148': {
-    title: 'Pennsylvania Forests', 
+    title: 'Pennsylvania Forests',
     text: 'Lovley bird noises',
     audioSrc: 'BirdSoundsLoop.mp3',
     imgSrc: 'PennForrests.jpg',
   },
-  'None': {
-    title: '', 
+  None: {
+    title: '',
     text: '',
     audioSrc: '',
     imgSrc: '',
@@ -53,9 +53,9 @@ class HallOfBotanyView extends React.Component {
   }
 
   componentDidMount() {
-    const notificationText = "Do you hear that? Something is playing faintly in the background, you should open the Hall Of Botany app and hear it yourself.";
+    const notificationText = 'Do you hear that? Something is playing faintly in the background, you should open the Hall Of Botany app and hear it yourself.';
     BeaconManager.startTracking(proximityUUID, beaconRegionID, notificationText);
-    NativeAppEventEmitter.addListener("BeaconManagerBeaconPing", (body) => this.beaconNotificationPing(body));
+    NativeAppEventEmitter.addListener('BeaconManagerBeaconPing', (body) => this.beaconNotificationPing(body));
 
     AudioManager.prepareForBackgroundAudio();
   }
@@ -77,7 +77,7 @@ class HallOfBotanyView extends React.Component {
     // Beacon -> Same Beacon = adjustAudioVolume
     // Beacon -> Different Beacon = loadAudio
     // Beacon -> None = stopAudio
-    if ((activeBeacon.title === Beacons.None.title) && 
+    if ((activeBeacon.title === Beacons.None.title) &&
         (detectedBeacon.title !== Beacons.None.title)) {
       loadAudio(detectedBeacon.audioSrc);
       changeActiveBeacon(detectedBeacon, body.rssi);
@@ -126,7 +126,7 @@ class HallOfBotanyView extends React.Component {
     var title = activeBeacon.title;
 
     if (title === Beacons.None.title) {
-      title = "Please walk around to \nexperience this exhibit";
+      title = 'Please walk around to \nexperience this exhibit';
     }
 
     if (activeBeacon.zone === Zones.NEAR) {
@@ -147,7 +147,7 @@ class HallOfBotanyView extends React.Component {
         </View>
 
         <View style={styles.body}>
-          <Image style={[styles.image, {opacity: imageOpacity}]} 
+          <Image style={[styles.image, {opacity: imageOpacity}]}
                  source={this.loadBeaconImage(activeBeacon.imgSrc)} />
 
           <Text style={styles.title}>

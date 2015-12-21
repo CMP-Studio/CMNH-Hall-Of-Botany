@@ -16,9 +16,11 @@ export default function audio(state = initalState, action) {
       return Object.assign({}, state, {volume: action.volume});
 
     case STOP_AUDIO:
+      return Object.assign({}, state, {audioSrc: '', state: action.state});
+
     case PLAY_AUDIO:
     case PAUSE_AUDIO:
-      return Object.assign({}, state, {audioSrc: '', state: action.state});
+      return Object.assign({}, state, {state: action.state});
 
     default:
       return state;
