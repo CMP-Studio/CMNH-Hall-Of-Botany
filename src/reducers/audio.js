@@ -10,19 +10,41 @@ const initalState = {
 export default function audio(state = initalState, action) {
   switch (action.type) {
     case LOAD_AUDIO:
-      return Object.assign({}, state, {audioSrc: action.audioSrc, state: action.state});
+      return Object.assign({},
+        state,
+        {
+          audioSrc: action.audioSrc,
+          state: action.state,
+        }
+      );
 
     case ADJUST_AUDIO_VOLUME:
-      return Object.assign({}, state, {volume: action.volume});
+      return Object.assign({},
+        state,
+        {
+          volume: action.volume,
+        }
+      );
 
     case STOP_AUDIO:
-      return Object.assign({}, state, {audioSrc: '', state: action.state});
+      return Object.assign({},
+        state,
+        {
+          audioSrc: '',
+          state: action.state,
+        }
+      );
 
     case PLAY_AUDIO:
     case PAUSE_AUDIO:
-      return Object.assign({}, state, {state: action.state});
+      return Object.assign({},
+        state,
+        {
+          state: action.state,
+        }
+      );
 
     default:
       return state;
-  };
+  }
 }

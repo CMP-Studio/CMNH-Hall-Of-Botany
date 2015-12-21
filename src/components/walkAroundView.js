@@ -8,23 +8,6 @@ const {
   Text,
 } = React;
 
-class WalkAroundView extends React.Component {
-  render() {
-    const message = 'Please walk around to \nexperience this exhibit';
-
-    return (
-      <View>
-        <Image style={styles.image}
-               source={require('../img/FootSteps.png')} />
-
-        <Text style={styles.title}>
-          {message}
-        </Text>
-      </View>
-    );
-  }
-}
-
 const styles = StyleSheet.create({
   image: {
     height: 250,
@@ -36,5 +19,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+
+class WalkAroundView extends React.Component {
+  render() {
+    const message = 'Please walk around to \nexperience this exhibit';
+
+    return (
+      <View>
+        <Image
+          style={styles.image}
+          source={require('../img/FootSteps.png')}
+        />
+
+        <Text style={styles.title}>
+          {message}
+        </Text>
+      </View>
+    );
+  }
+}
 
 module.exports = WalkAroundView;

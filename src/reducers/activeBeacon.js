@@ -11,8 +11,8 @@ const initalState = {
   zone: Zones.UNKNOWN,
 };
 
-const periodLength = 4;
-const bounceAmmount = 5;
+const PERIOD_LENGTH = 4;
+const BOUNCE_AMMOUNT = 5;
 
 function assignZone(rssi, lastZone) {
   const signalStg = Math.round(rssi);
@@ -22,10 +22,10 @@ function assignZone(rssi, lastZone) {
 
   // bounce boundaries up once entering a zone to prevent noise
   // from causing constant zone changes
-  if (lastZone == Zones.NEAR) {
-    nearUpperLimit -= bounceAmmount;
-  } else if (lastZone == Zones.FAR) {
-    farUpperLimit -= bounceAmmount;
+  if (lastZone === Zones.NEAR) {
+    nearUpperLimit -= BOUNCE_AMMOUNT;
+  } else if (lastZone === Zones.FAR) {
+    farUpperLimit -= BOUNCE_AMMOUNT;
   }
 
   if (signalStg <= -1 && signalStg >= farUpperLimit) {
@@ -47,17 +47,17 @@ export default function activeBeacon(state = initalState, action) {
 
     case CHANGE_ACTIVE_BEACON:
       return Object.assign({},
-          state,
-          action.beacon,
-          {
-            rssiHistory: [action.rssi],
-            rssiRollingAverage: action.rssi,
-            zone: assignZone(action.rssi, state.zone)
-          }
-        );
+        state,
+        action.beacon,
+        {
+          rssiHistory: [action.rssi],
+          rssiRollingAverage: action.rssi,
+          zone: assignZone(action.rssi, state.zone),
+        }
+      );
 
     case UPDATE_ACTIVE_BEACON:
-      let history = state.rssiHistory;
+      const history = state.rssiHistory;
       let sum = 0;
       let average;
 
@@ -65,12 +65,12 @@ export default function activeBeacon(state = initalState, action) {
         history.push(action.rssi);
       }
 
-      if (history.length > periodLength) {
-        history.splice(0,1);
+      if (history.length > PERIOD_LENGTH) {
+        history.splice(0, 1);
       }
 
-      for (var i in history) {
-        sum += history[i];
+      for (const i of history) {
+        sum += i;
       }
 
       average = sum / history.length;
@@ -80,11 +80,11 @@ export default function activeBeacon(state = initalState, action) {
         {
           rssiHistory: history,
           rssiRollingAverage: average,
-          zone: assignZone(average, state.zone)
+          zone: assignZone(average, state.zone),
         }
       );
 
     default:
       return state;
-  };
+  }
 }

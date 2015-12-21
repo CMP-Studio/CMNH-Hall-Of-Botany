@@ -2,7 +2,6 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  */
-'use strict';
 
 import React, { Component, AppRegistry } from 'react-native';
 import { Provider } from 'react-redux/native';
@@ -11,7 +10,7 @@ import configureStore from './src/store/configureStore';
 
 const store = configureStore();
 
-class Hall_Of_Botany extends Component {
+class HallOfBotany extends Component {
   render() {
     return (
       <Provider store={store}>
@@ -21,4 +20,4 @@ class Hall_Of_Botany extends Component {
   }
 }
 
-AppRegistry.registerComponent('Hall_Of_Botany', () => Hall_Of_Botany);
+AppRegistry.registerComponent('Hall_Of_Botany', () => HallOfBotany);
