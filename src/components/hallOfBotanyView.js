@@ -2,6 +2,7 @@
 import { Zones } from '../actions/actions';
 import WalkAroundView from './walkAroundView';
 import BeaconView from './beaconView';
+import NowPlayingToolbar from './nowPlayingToolbar';
 
 const React = require('react-native');
 const BeaconManager = React.NativeModules.BeaconManager;
@@ -74,8 +75,14 @@ class HallOfBotanyView extends React.Component {
         imgSrc: PropTypes.string.isRequired,
         zone: PropTypes.string.isRequired,
       }).isRequired,
+      audio: PropTypes.shape({
+        audioSrc: PropTypes.string.isRequired,
+        state: PropTypes.string.isRequired,
+        volume: PropTypes.number.isRequired,
+      }).isRequired,
       loadAudio: PropTypes.func.isRequired,
       stopAudio: PropTypes.func.isRequired,
+      togglePlayAudio: PropTypes.func.isRequired,
       adjustAudioVolume: PropTypes.func.isRequired,
       clearActiveBeacon: PropTypes.func.isRequired,
       updateActiveBeacon: PropTypes.func.isRequired,
@@ -150,8 +157,8 @@ class HallOfBotanyView extends React.Component {
   }
 
   render() {
-    const { activeBeacon } = this.props;
-    const debug = true;
+    const { activeBeacon, audio, togglePlayAudio } = this.props;
+    const debug = false;
     let body;
 
     if (activeBeacon.zone === Zones.UNKNOWN) {
@@ -192,6 +199,8 @@ class HallOfBotanyView extends React.Component {
             </Text>
           </View>
         </View>
+
+        <NowPlayingToolbar audio={audio} togglePlayAudio={togglePlayAudio}/>
       </View>
     );
   }

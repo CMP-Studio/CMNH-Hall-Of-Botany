@@ -18,6 +18,7 @@ RCT_EXTERN_METHOD(adjustVolume:(double)volume)
 RCT_EXTERN_METHOD(playAudio)
 RCT_EXTERN_METHOD(pauseAudio)
 RCT_EXTERN_METHOD(stopAudio)
+RCT_EXTERN_METHOD(togglePlayAudio)
 
 RCT_EXTERN_METHOD(prepareForBackgroundAudio)
 

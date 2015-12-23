@@ -1,9 +1,9 @@
 
-import { LOAD_AUDIO, ADJUST_AUDIO_VOLUME, STOP_AUDIO, PLAY_AUDIO, PAUSE_AUDIO, AudioStates } from '../actions/actions';
+import { LOAD_AUDIO, ADJUST_AUDIO_VOLUME, STOP_AUDIO, PLAY_AUDIO, PAUSE_AUDIO, TOGGLE_PLAY_AUDIO, AudioStates } from '../actions/actions';
 
 const initalState = {
   audioSrc: '',
-  state: AudioStates.STOPPED,
+  audioState: AudioStates.STOPPED,
   volume: 0.0,
 };
 
@@ -14,7 +14,7 @@ export default function audio(state = initalState, action) {
         state,
         {
           audioSrc: action.audioSrc,
-          state: action.state,
+          audioState: action.audioState,
         }
       );
 
@@ -31,7 +31,33 @@ export default function audio(state = initalState, action) {
         state,
         {
           audioSrc: '',
-          state: action.state,
+          audioState: action.audioState,
+        }
+      );
+
+    case TOGGLE_PLAY_AUDIO:
+      let newAudioState;
+
+      switch (state.audioState) {
+        case AudioStates.PLAYING:
+          newAudioState = AudioStates.PAUSED;
+          break;
+
+        case AudioStates.STOPPED:
+        case AudioStates.PAUSED:
+          newAudioState = AudioStates.PLAYING;
+          break;
+
+        default:
+          newAudioState = state.audioState;
+      }
+
+      console.log(newAudioState);
+
+      return Object.assign({},
+        state,
+        {
+          audioState: newAudioState,
         }
       );
 
@@ -40,7 +66,7 @@ export default function audio(state = initalState, action) {
       return Object.assign({},
         state,
         {
-          state: action.state,
+          audioState: action.audioState,
         }
       );
 

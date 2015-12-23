@@ -89,6 +89,16 @@ class AudioManager: NSObject {
     player?.play()
   }
   
+  @objc func togglePlayAudio() {
+    if let _player = player {
+      if _player.playing {
+        _player.pause()
+      } else {
+        _player.play()
+      }
+    }
+  }
+  
   @objc func stopAudio() {
     if let _player = player {
       fadetoVolume(0.0) {

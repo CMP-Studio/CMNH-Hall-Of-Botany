@@ -16,6 +16,7 @@ export const LOAD_AUDIO = 'LOAD_AUDIO';
 export const STOP_AUDIO = 'STOP_AUDIO';
 export const PLAY_AUDIO = 'PLAY_AUDIO';
 export const PAUSE_AUDIO = 'PAUSE_AUDIO';
+export const TOGGLE_PLAY_AUDIO = 'TOGGLE_PLAY_AUDIO';
 export const ADJUST_AUDIO_VOLUME = 'ADJUST_AUDIO_VOLUME';
 
 /*
@@ -52,7 +53,7 @@ export function clearActiveBeacon() {
 
 export function loadAudio(audioSrc) {
   AudioManager.loadAudio(audioSrc);
-  return { type: LOAD_AUDIO, audioSrc, state: AudioStates.PLAYING };
+  return { type: LOAD_AUDIO, audioSrc, audioState: AudioStates.PLAYING };
 }
 
 export function adjustAudioVolume(volume) {
@@ -62,15 +63,20 @@ export function adjustAudioVolume(volume) {
 
 export function stopAudio() {
   AudioManager.stopAudio();
-  return { type: STOP_AUDIO, state: AudioStates.STOPPED };
+  return { type: STOP_AUDIO, audioState: AudioStates.STOPPED };
 }
 
 export function pauseAudio() {
   AudioManager.pauseAudio();
-  return { type: PAUSE_AUDIO, state: AudioStates.PAUSED };
+  return { type: PAUSE_AUDIO, audioState: AudioStates.PAUSED };
 }
 
 export function playAudio() {
   AudioManager.playAudio();
-  return { type: PLAY_AUDIO, state: AudioStates.PLAYING };
+  return { type: PLAY_AUDIO, audioState: AudioStates.PLAYING };
+}
+
+export function togglePlayAudio() {
+  AudioManager.togglePlayAudio();
+  return { type: TOGGLE_PLAY_AUDIO };
 }
