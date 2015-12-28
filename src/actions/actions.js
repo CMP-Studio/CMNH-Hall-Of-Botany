@@ -18,6 +18,9 @@ export const PLAY_AUDIO = 'PLAY_AUDIO';
 export const PAUSE_AUDIO = 'PAUSE_AUDIO';
 export const TOGGLE_PLAY_AUDIO = 'TOGGLE_PLAY_AUDIO';
 export const ADJUST_AUDIO_VOLUME = 'ADJUST_AUDIO_VOLUME';
+export const MUTE_AUDIO = 'MUTE_AUDIO';
+export const UNMUTE_AUDIO = 'UNMUTE_AUDIO';
+export const TOGGLE_MUTE_AUDIO = 'TOGGLE_MUTE_AUDIO';
 
 /*
  * other constants
@@ -51,8 +54,8 @@ export function clearActiveBeacon() {
   return { type: CLEAR_ACTIVE_BEACON };
 }
 
-export function loadAudio(audioSrc) {
-  AudioManager.loadAudio(audioSrc);
+export function loadAudio(audioSrc, callback) {
+  AudioManager.loadAudio(audioSrc, callback);
   return { type: LOAD_AUDIO, audioSrc, audioState: AudioStates.PLAYING };
 }
 
@@ -71,12 +74,27 @@ export function pauseAudio() {
   return { type: PAUSE_AUDIO, audioState: AudioStates.PAUSED };
 }
 
-export function playAudio() {
-  AudioManager.playAudio();
-  return { type: PLAY_AUDIO, audioState: AudioStates.PLAYING };
+export function playAudio(volume = 1.0) {
+  AudioManager.playAudio(volume);
+  return { type: PLAY_AUDIO, audioState: AudioStates.PLAYING, volume };
 }
 
 export function togglePlayAudio() {
   AudioManager.togglePlayAudio();
   return { type: TOGGLE_PLAY_AUDIO };
+}
+
+export function muteAudio() {
+  AudioManager.muteAudio();
+  return { type: MUTE_AUDIO, muted: true };
+}
+
+export function unmuteAudio() {
+  AudioManager.unmuteAudio();
+  return { type: UNMUTE_AUDIO, muted: false };
+}
+
+export function toggleMuteAudio() {
+  AudioManager.toggleMuteAudio();
+  return { type: TOGGLE_MUTE_AUDIO };
 }

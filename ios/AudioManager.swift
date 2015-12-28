@@ -20,6 +20,9 @@ class AudioManager: NSObject {
   var player:AVAudioPlayer?
   var timer:NSTimer?
   var finishedChangingAudio = true
+  
+  var muted = false
+  var previousVolume:Double = 0.0 // only used when muting/unmuting
 
   override init() {
     super.init()
@@ -40,7 +43,7 @@ class AudioManager: NSObject {
     }
   }
   
-  @objc func loadAudio(audio: String) {
+  @objc func loadAudio(audio: String, audioLoadedCallback:RCTResponseSenderBlock? = nil) {
     if audio == "" || audio == audioSrc {
       return
     }
@@ -51,10 +54,11 @@ class AudioManager: NSObject {
       do {
         player = try AVAudioPlayer(contentsOfURL: soundURL)
         audioSrc = audio
-        player!.numberOfLoops = -1
-        player!.play()
-        player!.volume = 0.0
         finishedChangingAudio = true;
+        
+        if let _audioLoadedCallback = audioLoadedCallback {
+          _audioLoadedCallback([])
+        }
         
       } catch let error as NSError {
         print("Error - AudioManager - \(error.domain)")
@@ -75,8 +79,10 @@ class AudioManager: NSObject {
   
   @objc func adjustVolume(volume: Double) {
     if let _player = player {
-      if finishedChangingAudio && (volume != Double(_player.volume)) {
-        fadetoVolume(volume)
+      if !muted {
+        if finishedChangingAudio && (volume != Double(_player.volume)) {
+          fadetoVolume(volume)
+        }
       }
     }
   }
@@ -85,7 +91,9 @@ class AudioManager: NSObject {
     player?.pause()
   }
   
-  @objc func playAudio() {
+  @objc func playAudio(volume:Double = 0.0) {
+    player?.volume = Float(volume)
+    player?.numberOfLoops = -1 // TODO: this should be an option, not hard coded
     player?.play()
   }
   
@@ -105,6 +113,34 @@ class AudioManager: NSObject {
         _player.stop()
         self.audioSrc = ""
       }
+    }
+  }
+  
+  @objc func muteAudio() {
+    if !muted {
+      if let _player = player {
+        previousVolume = Double(_player.volume)
+      } else {
+        previousVolume = 0.0
+      }
+      
+      adjustVolume(0.0)
+      muted = true
+    }
+  }
+  
+  @objc func unmuteAudio() {
+    if muted {
+      muted = false
+      adjustVolume(previousVolume)
+    }
+  }
+  
+  @objc func toggleMuteAudio() {
+    if muted {
+      unmuteAudio()
+    } else {
+      muteAudio()
     }
   }
   
