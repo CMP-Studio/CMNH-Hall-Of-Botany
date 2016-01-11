@@ -32,12 +32,15 @@ class AudioManager: NSObject {
     do {
       try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
       print("AVAudioSession Category Playback OK")
+      
       do {
         try AVAudioSession.sharedInstance().setActive(true)
         print("AVAudioSession is Active")
+        
       } catch let error as NSError {
         print(error.localizedDescription)
       }
+      
     } catch let error as NSError {
       print(error.localizedDescription)
     }
@@ -78,11 +81,11 @@ class AudioManager: NSObject {
   }
   
   @objc func adjustVolume(volume: Double) {
-    if let _player = player {
-      if !muted {
-        if finishedChangingAudio && (volume != Double(_player.volume)) {
-          fadetoVolume(volume)
-        }
+    guard let _player = player else { return }
+    
+    if !muted {
+      if finishedChangingAudio && (volume != Double(_player.volume)) {
+        fadetoVolume(volume)
       }
     }
   }
@@ -92,48 +95,50 @@ class AudioManager: NSObject {
   }
   
   @objc func playAudio(volume:Double = 0.0) {
-    player?.volume = Float(volume)
-    player?.numberOfLoops = -1 // TODO: this should be an option, not hard coded
-    player?.play()
+    guard let _player = player else { return }
+    
+    _player.volume = Float(volume)
+    _player.numberOfLoops = -1 // TODO: this should be an option, not hard coded
+    _player.play()
   }
   
   @objc func togglePlayAudio() {
-    if let _player = player {
-      if _player.playing {
-        _player.pause()
-      } else {
-        _player.play()
-      }
+    guard let _player = player else { return }
+    
+    if _player.playing {
+      _player.pause()
+    } else {
+      _player.play()
     }
   }
   
   @objc func stopAudio() {
-    if let _player = player {
-      fadetoVolume(0.0) {
-        _player.stop()
-        self.audioSrc = ""
-      }
+    guard let _player = player else { return }
+    
+    fadetoVolume(0.0) {
+      _player.stop()
+      self.audioSrc = ""
     }
   }
   
   @objc func muteAudio() {
-    if !muted {
-      if let _player = player {
-        previousVolume = Double(_player.volume)
-      } else {
-        previousVolume = 0.0
-      }
-      
-      adjustVolume(0.0)
-      muted = true
+    guard !muted else { return }
+    
+    if let _player = player {
+      previousVolume = Double(_player.volume)
+    } else {
+      previousVolume = 0.0
     }
+    
+    adjustVolume(0.0)
+    muted = true
   }
   
   @objc func unmuteAudio() {
-    if muted {
-      muted = false
-      adjustVolume(previousVolume)
-    }
+    guard muted else { return }
+    
+    muted = false
+    adjustVolume(previousVolume)
   }
   
   @objc func toggleMuteAudio() {
