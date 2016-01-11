@@ -57,12 +57,26 @@ class BeaconManager: NSObject, CBPeripheralManagerDelegate, ESTBeaconManagerDele
   // MARK: - ESTBeaconManagerDelegate functions
   
   func beaconManager(manager: AnyObject, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
-    var eventBody = ["major" : "", "minor" : "", "rssi": 0]
+    var eventBody = ["major" : "", "minor" : "", "proximity": "UNKNOWN"]
     
     if let nearestBeacon = beacons.first {
+      var proximity = "UNKNOWN"
+      
+      switch nearestBeacon.proximity {
+      case .Immediate, .Near:
+        proximity = "NEAR"
+        
+      case .Far:
+        proximity = "FAR"
+        
+      case .Unknown:
+        proximity = "UNKNOWN"
+        
+      }
+      
       eventBody = ["major": String(nearestBeacon.major),
                    "minor": String(nearestBeacon.minor),
-                   "rssi": nearestBeacon.rssi]
+                   "proximity": proximity]
     }
     
     bridge.eventDispatcher.sendAppEventWithName(eventName, body: eventBody)

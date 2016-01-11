@@ -42,12 +42,12 @@ export const AudioStates = {
  * action creators
  */
 
-export function changeActiveBeacon(beacon, rssi) {
-  return { type: CHANGE_ACTIVE_BEACON, beacon, rssi };
+export function changeActiveBeacon(beacon, proximity) {
+  return { type: CHANGE_ACTIVE_BEACON, beacon, proximity };
 }
 
-export function updateActiveBeacon(rssi) {
-  return { type: UPDATE_ACTIVE_BEACON, rssi };
+export function updateActiveBeacon(proximity) {
+  return { type: UPDATE_ACTIVE_BEACON, proximity };
 }
 
 export function clearActiveBeacon() {

@@ -138,7 +138,7 @@ class HallOfBotanyView extends React.Component {
         playAudio(0.0);
       });
 
-      changeActiveBeacon(detectedBeacon, body.rssi);
+      changeActiveBeacon(detectedBeacon, body.proximity);
 
     } else if (activeBeacon.title !== Beacons.None.title) {
 
@@ -155,7 +155,7 @@ class HallOfBotanyView extends React.Component {
         // Due to fading and how quickly the beacons ping it will quickly
         // adjust to new proximities
         adjustAudioVolume(soundVolume);
-        updateActiveBeacon(body.rssi);
+        updateActiveBeacon(body.proximity);
 
       } else if (detectedBeacon.title === Beacons.None.title) {
         stopAudio();
@@ -166,7 +166,7 @@ class HallOfBotanyView extends React.Component {
           playAudio(0.0);
         });
 
-        changeActiveBeacon(detectedBeacon, body.rssi);
+        changeActiveBeacon(detectedBeacon, body.proximity);
       }
     }
   }
