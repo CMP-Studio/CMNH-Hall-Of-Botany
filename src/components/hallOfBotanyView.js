@@ -12,13 +12,13 @@ const PROXIMITY_UUID = '3E75CE42-FCB1-C4CF-2A09-7595CD914F96';
 const BEACON_REGION_ID = 'Hall Of Botany';
 
 const Beacons = {
-  '41892:30560': {
+  '3936:36837': {
     title: 'Mt. Rainer',
     text: 'The sound of rushing water',
     audioSrc: 'WaterSoundsLoop.mp3',
     imgSrc: 'MtRainer.jpg',
   },
-  '54445:31148': {
+  '20210:61075': {
     title: 'Pennsylvania Forests',
     text: 'Lovley bird noises',
     audioSrc: 'BirdSoundsLoop.mp3',

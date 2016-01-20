@@ -27,10 +27,17 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Hall of Botany uses bluetooth to figure out your indoor location and customize your experience based on your location.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Yup yup yup!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
 		<string>location</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -44,11 +51,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Hall of Botany uses bluetooth to figure out your indoor location and customize your experience based on your location.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Yup yup yup!</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 </dict>
 </plist>

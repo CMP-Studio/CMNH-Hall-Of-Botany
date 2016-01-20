@@ -1,5 +1,5 @@
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux/native';
+import { connect } from 'react-redux';
 import HallOfBotanyView from '../components/hallOfBotanyView';
 import * as HallOfBotanyActions from '../actions/actions';
 

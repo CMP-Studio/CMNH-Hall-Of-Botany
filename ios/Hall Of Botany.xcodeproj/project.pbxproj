@@ -217,12 +217,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		00E356EF1AD99517003FC87E /* Hall_Of_BotanyTests */ = {
+		00E356EF1AD99517003FC87E /* Hall Of Botany Tests */ = {
 			isa = PBXGroup;
 			children = (
 				00E356F21AD99517003FC87E /* Hall_Of_BotanyTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
+			name = "Hall Of Botany Tests";
 			path = Hall_Of_BotanyTests;
 			sourceTree = "<group>";
 		};
@@ -250,7 +251,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* Hall_Of_Botany */ = {
+		13B07FAE1A68108700A75B9A /* Hall Of Botany */ = {
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -266,7 +267,7 @@
 				32D4FE9C1C109D4B001A9CCB /* AudioManager */,
 				32D4FE8D1C109B59001A9CCB /* BeaconManager */,
 			);
-			name = Hall_Of_Botany;
+			name = "Hall Of Botany";
 			sourceTree = "<group>";
 		};
 		146834001AC3E56700842450 /* Products */ = {
@@ -340,9 +341,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* Hall_Of_Botany */,
+				13B07FAE1A68108700A75B9A /* Hall Of Botany */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* Hall_Of_BotanyTests */,
+				00E356EF1AD99517003FC87E /* Hall Of Botany Tests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				847A1B538CCA1CC966264E75 /* Frameworks */,
 			);
@@ -709,7 +710,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.carnegie.Hall-of-Botany";
+				PRODUCT_BUNDLE_IDENTIFIER = "Hall-of-Botany";
 				PRODUCT_NAME = "Hall of Botany";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Hall_Of_Botany-Bridging-Header.h";
@@ -737,7 +738,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.carnegie.Hall-of-Botany";
+				PRODUCT_BUNDLE_IDENTIFIER = "Hall-of-Botany";
 				PRODUCT_NAME = "Hall of Botany";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Hall_Of_Botany-Bridging-Header.h";
